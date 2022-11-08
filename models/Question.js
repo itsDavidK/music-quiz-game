@@ -33,4 +33,4 @@ Question.init(
     }
 );
 
-module.exports = User;
+module.exports = Question;

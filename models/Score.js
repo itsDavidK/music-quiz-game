@@ -40,4 +40,4 @@ Score.init(
     }
 );
 
-module.exports = User;
+module.exports = Score;

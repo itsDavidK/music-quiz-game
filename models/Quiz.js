@@ -33,4 +33,4 @@ Quiz.init(
     }
 );
 
-module.exports = User;
+module.exports = Quiz;
