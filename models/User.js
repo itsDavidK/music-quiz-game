@@ -24,6 +24,12 @@ User.init(
         },
     },
     {
+        hooks: {
+            beforeCreate: userObj => {
+                userObj.password = bcrypt.hashSync(userObj.password, 8);
+                return userObj
+            }
+        },
         sequelize,
         timestamps: false,
         freezeTableName: true,
