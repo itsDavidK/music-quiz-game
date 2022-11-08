@@ -10,5 +10,32 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/play-alone', async (req, res) => {
+    try {
+        res.render('quiz')
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+})
+
+router.get('/play-friends', async (req, res) => {
+    try {
+        res.render('quiz')
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+})
+
+router.get('/create-quiz', async (req, res) => {
+    try {
+        res.render('create')
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+})
+
 
 module.exports = router;

@@ -12,8 +12,14 @@
       </label>
       <div class="collapsible-body">
         <ul class="inline">
+
+          {{#if loggedIn}}
+          <button id="logout" class="btn-no-style">Logout</button>
+          {{else}}
           <li><a href="#">Sign Up</a></li>
           <li><a href="#">Login</a></li>
+          {{/if}}
+
           <li>
             <label class="paper-btn" for="modal-about">About</label>
             <input class="modal-state" id="modal-about" type="checkbox">
@@ -44,9 +50,9 @@
           <h4 class="card-title">Play Alone!</h4>
           <h5 class="card-subtitle">How To Play?</h5>
           <p class="card-text">Select which song you think has the most views on YouTube.</p>
-          <button>Play Now!</button>
+          <button><a href="/play-alone">Play Now!</a></button>
         </div>
-        <img class="image-bottom" src="../assets/images/alone.jpg" alt="Image of a stickman taking a quiz by himself.">
+        <img class="image-bottom" src="/assets/images/alone.jpg" alt="Image of a stickman taking a quiz by himself.">
       </div>
     </div>
 
@@ -56,9 +62,9 @@
           <h4 class="card-title">Play with Friends!</h4>
           <h5 class="card-subtitle">How To Play?</h5>
           <p class="card-text">Compete with friends in the original gamemode to determine who is the best.</p>
-          <button>Play Now!</button>
+          <button><a href="/play-friends">Play Now!</a></button>
         </div>
-        <img class="image-bottom" src="../assets/images/withFriends.jpg"
+        <img class="image-bottom" src="/assets/images/withFriends.jpg"
           alt="Image of two stickmen facing each other in a game.">
       </div>
     </div>
@@ -69,9 +75,9 @@
           <h4 class="card-title">Make a Quiz!</h4>
           <h5 class="card-subtitle">Say What?</h5>
           <p class="card-text">Create a quiz to test your friends whether they know as much as you!</p>
-          <button>Create Now!</button>
+          <button><a href="/create-quiz">Create Now!</a></button>
         </div>
-        <img class="image-bottom" src="../assets/images/makeQuiz.jpg" alt="Image of a lightbulb lighting up.">
+        <img class="image-bottom" src="/assets/images/makeQuiz.jpg" alt="Image of a lightbulb lighting up.">
       </div>
     </div>
 
