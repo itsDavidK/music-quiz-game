@@ -31,7 +31,7 @@ Score.hasOne(Quiz, {
     foreignKey: 'quiz_id',
 })
 
-Quiz.belongsToMany(Score, {
+Quiz.belongsTo(Score, {
     foreignKey: 'quiz_id',
 })
 
