@@ -37,29 +37,30 @@
 
   <div class="row flex-center">
 
-    <div class="card" style="width: 20rem;">
-      <img src="https://picsum.photos/769" alt="Image of a YouTube video thumbnail.">
+    <div class="card" style="width: 20rem;" id="music-card-one">
+      <img id="musicOneImage">
       <div class="card-body">
-        <h4 class="card-title">Song Title Here</h4>
+        <h4 class="card-title" id="titleOne">Song Title Here</h4>
         <div class="col-12 col">
-          <button class="btn-block">HIGHER!</button>
+          <button class="btn-block" id="higherOne">HIGHER!</button>
         </div>
       </div>
     </div>
 
-    <div class="card" style="width: 20rem;">
-      <img src="https://picsum.photos/768" alt="Image of a YouTube video thumbnail.">
+    <div class="card" style="width: 20rem;"  id="music-card-two">
+      <img id="musicTwoImage" alt="Image of a YouTube video thumbnail.">
       <div class="card-body">
-        <h4 class="card-title">Song Title Here</h4>
+        <h4 class="card-title" id="titleTwo">Song Title Here</h4>
         <div class="col-12 col">
-          <button class="btn-block">HIGHER!</button>
+          <button class="btn-block" id="higherTwo">HIGHER!</button>
         </div>
       </div>
     </div>
   </div>
 
   <div class="row flex-center">
-    <p>Score: 0</p>
+    <p id="score"></p>
   </div>
 
+<script src="/js/gamefunction.js"></script>
 </body>

@@ -1,5 +1,9 @@
+const musicCardOne = document.querySelector("#music-card-one");
+const musicCardTwo = document.querySelector("#music-card-two");
+var answerButton = document.getElementsByClassName("btn-block");
 var musicArry = [];
 var score = 0;
+var quesionNum = 0;
 
 //get random music
 function getRanMusic() {
@@ -27,30 +31,77 @@ function getViews(musicInfo) {
     fetch('https://simple-youtube-search.p.rapidapi.com/video?search=' + musicInfo, options)
         .then(response => response.json())
         .then(response => {
-            console.log(response.result);
-            return musicArry.push(response.result);
+            musicArry.push(response.result);
+            checkingTwoItems();
         })
         .catch(err => console.error(err));
 }
 
-// inital start
-async function init() {
-    try {
-        musicArry = [];
+function checkingTwoItems() {
+    if (musicArry.length < 2) {
         getRanMusic();
-        getRanMusic();
+    } else {
         console.log(musicArry)
-        var musicOne = musicArry[0];
-        var musicTwo = musicArry[1];
+        const musicOne = musicArry[0];
+        const musicTwo = musicArry[1];
+        console.log(musicArry[0].thumbnail.url);
+        console.log(musicArry[0].description);
 
-        if (musicOne.id === musicTwo.id) {
-            getRanMusic();
-            musicTwo = musicArry[2];
+        document.querySelector('#musicOneImage').setAttribute("src", `${musicOne.thumbnail.url}`)
+        document.querySelector('#musicTwoImage').setAttribute("src", `${musicTwo.thumbnail.url}`)
+
+        document.querySelector('#titleOne').innerHTML = (`${musicOne.title}`)
+        document.querySelector('#titleTwo').innerHTML = (`${musicTwo.title}`)
+
+        var oneAnswer = "";
+        var twoAnswer = "";
+
+        if (musicOne.views > musicTwo.views) {
+            oneAnswer = true;
+            twoAnswer = false;
+        } else if (musicTwo.views > musicOne.views) {
+            oneAnswer = false;
+            twoAnswer = true;
+        } else {
+            oneAnswer = true;
+            twoAnswer = true;
         }
-
-    } catch {
-        console.log(err)
+        document.querySelector('#higherOne').setAttribute("data-view", `${oneAnswer}`)
+        document.querySelector('#higherTwo').setAttribute("data-view", `${twoAnswer}`)
     }
 }
 
+function comparedata(event) {
+    const element = event.target;
+    console.log('click!')
+    console.log(element)
+    const answerData = element.getAttribute('data-view');
+    if (answerData == "true") {
+        score++;
+        console.log("right")
+    }
+    
+    if (answerData == "false") {
+        console.log("worng");  
+    }
+
+    if(quesionNum < 10) {
+        init();
+    } else {
+        document.location.replace('/');
+        return;
+    }  
+}
+
+// inital start
+function init() {
+    musicArry = [];
+    quesionNum++;
+    document.querySelector("#score").textContent = `score: ${score}`;
+    getRanMusic();
+}
+
+for (let i = 0; i < answerButton.length; i++) {
+    answerButton[i].addEventListener('click', comparedata)
+}
 init();
