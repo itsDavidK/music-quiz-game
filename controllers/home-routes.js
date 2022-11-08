@@ -29,11 +29,22 @@ router.get('/play-friends', async (req, res) => {
 })
 
 router.get('/create-quiz', async (req, res) => {
-    try {
-        res.render('create')
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
+    if (!req.session.loggedIn) {
+
+        try {
+            res.render('create')
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(err);
+        }
+    }
+    else {
+        try {
+            res.render('login')
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(err);
+        }
     }
 })
 
