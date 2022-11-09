@@ -24,7 +24,7 @@
           <li><a href="/users/signup">Sign Up</a></li>
           <li><a href="/users/login">Login</a></li>
           {{/if}}
-          
+
           <label class="paper-btn" for="modal-about">About</label>
           <input class="modal-state" id="modal-about" type="checkbox">
           <div class="modal">
@@ -40,37 +40,50 @@
       </div>
     </div>
   </nav>
-<div class="topleft"><a href="/"><p><span class="badge secondary">&lt;-</span> Take me back home!</p></a></div>
-  <div class="row flex-center">
-    <h1>Which Song Has More Views?</h1>
-  </div>
+  <section class="gamefunction">
+    <div class="topleft"><a href="/">
+        <p><span class="badge secondary">&lt;-</span> Take me back home!</p>
+      </a></div>
+    <div class="row flex-center">
+      <h1>Which Song Has More Views?</h1>
+    </div>
 
-  <div class="row flex-center">
+    <div class="row flex-center">
+      <div class="card" style="width: 20rem;" id="music-card-one">
+        <img id="musicOneImage">
+        <div class="card-body">
+          <h4 class="card-title" id="titleOne">Song Title Here</h4>
+          <div class="col-12 col">
+            <button class="btn-block" id="higherOne">HIGHER!</button>
+          </div>
+        </div>
+      </div>
 
-    <div class="card" style="width: 20rem;" id="music-card-one">
-      <img id="musicOneImage">
-      <div class="card-body">
-        <h4 class="card-title" id="titleOne">Song Title Here</h4>
-        <div class="col-12 col">
-          <button class="btn-block" id="higherOne">HIGHER!</button>
+      <div class="card" style="width: 20rem;" id="music-card-two">
+        <img id="musicTwoImage" alt="Image of a YouTube video thumbnail.">
+        <div class="card-body">
+          <h4 class="card-title" id="titleTwo">Song Title Here</h4>
+          <div class="col-12 col">
+            <button class="btn-block" id="higherTwo">HIGHER!</button>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="card" style="width: 20rem;"  id="music-card-two">
-      <img id="musicTwoImage" alt="Image of a YouTube video thumbnail.">
-      <div class="card-body">
-        <h4 class="card-title" id="titleTwo">Song Title Here</h4>
-        <div class="col-12 col">
-          <button class="btn-block" id="higherTwo">HIGHER!</button>
-        </div>
-      </div>
+    <div class="row flex-center">
+      <p id="score"></p>
     </div>
-  </div>
+  </section>
 
-  <div class="row flex-center">
-    <p id="score"></p>
-  </div>
+  <section class="gamedone">
+    <div class="row flex-center">
+      <h1>End of Quiz!</h1>
+    </div>
+    <h2 class="row flex-center"><span class="badge success" id="scoredisplay"></span></h2>
 
-<script src="/js/gamefunction.js"></script>
+    <div class="row flex-center">
+      <a href="/"><button class="btn-large btn-danger-outline">Home</button></a>
+      <a href="/play-alone"><button class="btn-large btn-success-outline">Play Again!</button></a>
+    </div>
+  </section>
+  <script src="/js/gamefunction.js"></script>
 </body>

@@ -28,6 +28,7 @@ async function quizSubmitHandler(event) {
     }
     console.log(quizId)
 }
+
 async function questionSubmitHandler(event) {
     event.preventDefault
     console.log('click')
