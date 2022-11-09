@@ -89,8 +89,19 @@ function comparedata(event) {
         init();
     } else {
         document.location.replace('/');
-        return;
+        storescore();
     }  
+}
+
+async function storescore() {
+    const response = await fetch('/api/scores/create', {
+        method: 'POST',
+        body: JSON.stringify({
+            score: score,
+            quiz_id: null,
+        }),
+        headers: { 'Content-Type': 'application/json' },
+    });
 }
 
 // inital start
