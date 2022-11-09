@@ -40,6 +40,7 @@ async function quizSubmitHandler(event) {
     nameSubmitButton.classList.add('hidden')
     document.getElementById('youtubeInput').classList.remove('hidden')
 }
+
 async function questionSubmitHandler(event) {
 
     console.log('click')

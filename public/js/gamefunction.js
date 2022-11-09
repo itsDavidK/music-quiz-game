@@ -80,20 +80,22 @@ function comparedata(event) {
         score++;
         console.log("right")
     }
-    
+
     if (answerData == "false") {
-        console.log("worng");  
+        console.log("worng");
     }
 
-    if(quesionNum < 9) {
+    if (quesionNum < 9) {
         init();
     } else {
-        document.location.replace('/quiz-done');
         storescore();
-    }  
+    }
 }
 
 async function storescore() {
+    document.querySelector(".gamefunction").classList.add("hidden");
+    document.querySelector(".gamedone").classList.remove("hidden");
+    document.querySelector("#scoredisplay").innerHTML = (`${score} /10`)
     const response = await fetch('/api/scores/create', {
         method: 'POST',
         body: JSON.stringify({
@@ -106,6 +108,7 @@ async function storescore() {
 
 // inital start
 function init() {
+    document.querySelector(".gamedone").classList.add("hidden");
     musicArry = [];
     quesionNum++;
     document.querySelector("#score").textContent = `score: ${score}`;
@@ -115,4 +118,5 @@ function init() {
 for (let i = 0; i < answerButton.length; i++) {
     answerButton[i].addEventListener('click', comparedata)
 }
+
 init();
