@@ -88,7 +88,7 @@ function comparedata(event) {
     if(quesionNum < 9) {
         init();
     } else {
-        document.location.replace('/');
+        document.location.replace('/quiz-done');
         storescore();
     }  
 }
