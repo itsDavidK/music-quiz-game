@@ -16,14 +16,24 @@ const signupFormHandler = async (event) => {
             });
 
             if (response.ok) {
+                await fetch('/api/profile/create', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        userRight: 0,
+                        userwrong: 0
+                    }),
+                    headers: { 'Content-Type': 'application/json' },
+                });
                 document.location.replace('/');
             } else {
                 alert('use different username or password')
             }
+
+
         }
     } else {
-            alert('No empty Blank!')
-        }
+        alert('No empty Blank!')
+    }
 }
 
 document.querySelector(".signin-form").addEventListener('submit', signupFormHandler)
