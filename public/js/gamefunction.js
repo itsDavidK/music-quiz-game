@@ -85,7 +85,7 @@ function comparedata(event) {
         console.log("worng");  
     }
 
-    if(quesionNum < 10) {
+    if(quesionNum < 9) {
         init();
     } else {
         document.location.replace('/');

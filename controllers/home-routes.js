@@ -3,7 +3,10 @@ const { Question, Quiz, Score, User } = require('../models');
 
 router.get('/', async (req, res) => {
     try {
-        res.render('homepage');
+        res.render('homepage', {
+            loggedIn: req.session.loggedIn,
+            userInfo: req.session.userInfo
+        });
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
@@ -12,7 +15,10 @@ router.get('/', async (req, res) => {
 
 router.get('/play-alone', async (req, res) => {
     try {
-        res.render('quiz')
+        res.render('quiz', {
+            loggedIn: req.session.loggedIn,
+            userInfo: req.session.userInfo
+        })
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
@@ -21,7 +27,10 @@ router.get('/play-alone', async (req, res) => {
 
 router.get('/play-friends', async (req, res) => {
     try {
-        res.render('quiz')
+        res.render('quiz', {
+            loggedIn: req.session.loggedIn,
+            userInfo: req.session.userInfo
+        })
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
@@ -29,24 +38,17 @@ router.get('/play-friends', async (req, res) => {
 })
 
 router.get('/create-quiz', async (req, res) => {
-    if (!req.session.loggedIn) {
-
-        try {
-            res.render('create')
-        } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+    try {
+        if (!req.session.loggedIn) {
+            return res.redirect("/user/login")
         }
-    }
-    else {
-        try {
-            res.render('login')
-        } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+        if (req.session.loggedIn) {
+            return res.render('create')
         }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
     }
 })
-
 
 module.exports = router;
