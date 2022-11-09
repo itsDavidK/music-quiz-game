@@ -1,11 +1,14 @@
 const router = require('express').Router();
 const { Question, Quiz, Score, User } = require('../../models');
 
+
 router.post("/create-quiz", async (req, res) => {
+    console.log(req.body)
     try {
         const dbQuizData = await Quiz.create({
             quiz_title: req.body.quiz_title,
-            user_id: req.session.info.id,
+
+            user_id: req.session.userInfo.id,
         })
         res.status(200).json(dbQuizData);
     } catch (err) {

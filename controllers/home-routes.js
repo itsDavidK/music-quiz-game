@@ -71,7 +71,10 @@ router.get('/userpage', async (req, res) => {
             return res.redirect("/user/login")
         }
         if (req.session.loggedIn) {
-            return res.render('userpage')
+            return res.render('userpage', {
+                loggedIn: req.session.loggedIn,
+                userInfo: req.session.userInfo
+            })
         }
     } catch (err) {
         console.log(err);
