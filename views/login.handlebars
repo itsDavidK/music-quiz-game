@@ -1,19 +1,19 @@
 <body class="row paper margin-top-small padding-left-large col-4 col">
 
-  <div class="row flex-center">
+  <form class="row flex-center login-form">
     <h1 class="col-12 col">Login</h1>
     <div class=" col-12 col form-group">
       <label for="paperInputs1">Username:</label>
-      <input type="text" placeholder="Enter your username here" id="usernameInput">
+      <input type="text" placeholder="Enter your username here" id="username-login">
     </div>
 
     <div class=" col-12 col form-group">
       <label for="paperInputs1">Password:</label>
-      <input type="text" placeholder="Enter your password here" id="passwordInput">
+      <input type="password" placeholder="Enter your password here" id="password-login">
     </div>
 
-    <input type="button" class="btn-primary-outline col-12 col form-group" value="Login" />
-    <a href="#">Don't have an account?</a>
-  </div>
-
+    <button type="submit" class="btn-primary-outline col-12 col form-group">Login
+    </button>
+    <a href="/users/signup">Don't have an account?</a>
+  </form>
 </body>

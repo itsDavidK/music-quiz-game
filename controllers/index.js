@@ -5,7 +5,9 @@ const user = require('./user')
 const homeRoutes = require('./home-routes');
 
 router.use('/', homeRoutes);
-router.use('/user', user);
+
+// profile, userlogin, userSignup are all in here
+router.use('/users', user);
 router.use('/api', apiRoutes);
 
 module.exports = router;
