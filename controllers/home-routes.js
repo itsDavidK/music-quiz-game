@@ -65,10 +65,17 @@ router.get('/quiz-done', async (req, res) => {
 
 router.get('/userpage', async (req, res) => {
     try {
-        res.render('userpage', {
-            loggedIn: req.session.loggedIn,
-            userInfo: req.session.userInfo
-        });
+
+        if (!req.session.loggedIn) {
+            return res.redirect("/user/login")
+        }
+        if (req.session.loggedIn) {
+            return res.render('userpage', {
+                loggedIn: req.session.loggedIn,
+                userInfo: req.session.userInfo
+            })
+        }
+
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
