@@ -1,20 +1,29 @@
-<body class ="paper">
-    <nav class="border fixed split-nav">
-        <div class="nav-brand">
-          <h3>Welcome Guest!</h3>
-        </div>
-        <div class="collapsible">
-          <input id="collapsible1" type="checkbox" name="collapsible1">
-          <label for="collapsible1">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-          </label>
-          <div class="collapsible-body">
-            <ul class="inline">
-              <li><a href="#">Sign Up</a></li>
-              <li><a href="#">Login</a></li>
-              <li>
+<body class="paper">
+  <nav class="border fixed split-nav">
+    <div class="nav-brand">
+      {{#if loggedIn}}
+      <h3>Welcome {{userInfo.username}}! </h3>
+      {{else}}
+      <h3>Welcome Guest!</h3>
+      {{/if}}
+    </div>
+    <div class="collapsible">
+      <input id="collapsible1" type="checkbox" name="collapsible1">
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+      <div class="collapsible-body">
+        <ul class="inline">
+
+          {{#if loggedIn}}
+          <button id="logout" class="btn-no-style">Logout</button>
+          <a href="/userpage"><button>Profile</button></a>
+          {{else}}
+          <li><a href="/users/signup">Sign Up</a></li>
+          <li><a href="/users/login">Login</a></li>
+          {{/if}}
                 <label class="paper-btn"for="modal-about">About</label>
                 <input class="modal-state" id="modal-about" type="checkbox">
                 <div class="modal">
@@ -31,17 +40,19 @@
         </div>
       </nav>
 
+  <div class="topleft"><a href="/"><p><span class="badge secondary">&lt;-</span> Take me back home!</p></a></div>
+
     <div class="row flex-center">
-         <h1>CoolGuy3</h1>
+         <h1>{{userInfo.username}}</h1>
       </div>
 
       <div class="row flex-center">
-      <img class="image-bottom" src="../public/assets/images/user.png"
+      <img class="image-bottom" src="/assets/images/user.png"
       alt="Image of the user's face.">
     </div> 
 
     <div class="row flex-center">
-      <h3>Level: 68</h3>
+      <h3>Level: {{userInfo.userlevel}}</h3>
       <div class="progress margin-bottom">
         <div class="bar muted w-90"></div>
       </div>
