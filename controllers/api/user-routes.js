@@ -46,7 +46,7 @@ router.post('/login', async (req, res) => {
         }
 
         // wrong password
-        if(!bcrypt.compareSync(req.body.password,dbUserData.password)) {
+        if(!bcrypt.compareSync(req.body.password, dbUserData.password)) {
             return res.status(401).json({msg:'Incorrect username or password. Please try again'})
         }
         //correct login
