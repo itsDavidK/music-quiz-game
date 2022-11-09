@@ -1,20 +1,20 @@
-const nameSubmitButton = document.getElementById('submitName')
-const nameInput = document.getElementById('nameInput')
-const URLInput = document.getElementById('URLInput')
-const questionSubmitButton = document.getElementById('submitURL')
-const badgeDone = document.getElementById('quizNameBadge')
-const youDiv = document.getElementById('youtubeInput')
-const nameDiv = document.getElementById('nameDiv')
+const nameSubmitButton = document.getElementById('submitName');
+const nameInput = document.getElementById('nameInput');
+const URLInput = document.getElementById('URLInput');
+const questionSubmitButton = document.getElementById('submitURL');
+const createButton = document.getElementById("create-quiz");
+const badgeDone = document.getElementById('quizNameBadge');
+const youDiv = document.getElementById('youtubeInput');
+const nameDiv = document.getElementById('nameDiv');
 let quizId
 let questionURL
+let arryURL = [];
 
 nameSubmitButton.addEventListener('click', quizSubmitHandler)
 questionSubmitButton.addEventListener('click', questionSubmitHandler)
+createButton.addEventListener('click', submitquizHandler)
 
 async function quizSubmitHandler(event) {
-
-    console.log('click')
-    console.log(nameInput.value)
     const quizName = nameInput.value
     if (nameInput.value == '') {
         nameInput.placeholder = 'please submit a name'
@@ -30,22 +30,17 @@ async function quizSubmitHandler(event) {
             },
         }).then(data => data.json())
             .then(res => {
-                console.log(res)
                 quizId = res.id
-                console.log(quizId)
-                nameDiv.append(quiz_title)
+                nameDiv.append(res.quiz_title)
             })
+        badgeDone.classList.remove('hidden')
+        nameSubmitButton.classList.add('hidden')
+        document.getElementById('youtubeInput').classList.remove('hidden')
     }
-    badgeDone.classList.remove('hidden')
-    nameSubmitButton.classList.add('hidden')
-    document.getElementById('youtubeInput').classList.remove('hidden')
+
 }
 
 async function questionSubmitHandler(event) {
-
-    console.log('click')
-    console.log(URLInput.value)
-    console.log(quizId)
     if (URLInput.value == '') {
         URLInput.placeholder = 'please submit a URL'
     }
@@ -61,15 +56,25 @@ async function questionSubmitHandler(event) {
             },
         }).then(data => data.json())
             .then(res => {
-                console.log(res)
+                arryURL.push(res.URL)
                 questionURL = res.URL
-                console.log(questionURL)
+                console.log(arryURL)
                 let urlDiv = document.createElement('div')
                 urlDiv.innerText = questionURL
                 youDiv.append(urlDiv)
             })
         URLInput.value = ''
-        document.getElementById('create-quiz').classList.remove('hidden')
+        document.getElementById('create-quiz').classList.remove('hidden');
     }
+
+    
 }
 
+function submitquizHandler() {
+    if(arryURL.length%2 === 1) {
+        alert("The link should be even number");
+    } else {
+        alert('its saved!');
+        document.location.replace('/');
+    }
+}

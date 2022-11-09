@@ -17,10 +17,6 @@ User.init(
             allowNull: false,
             unique: true,
         },
-        userlevel: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
