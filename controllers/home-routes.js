@@ -53,31 +53,27 @@ router.get('/create-quiz', async (req, res) => {
 
 router.get('/quiz-done', async (req, res) => {
     try {
-        if (!req.session.loggedIn) {
-            return res.redirect("/user/login")
-        }
-        if (req.session.loggedIn) {
-            return res.render('quiz-done')
-        }
+        res.render('quiz-done', {
+            loggedIn: req.session.loggedIn,
+            userInfo: req.session.userInfo
+        });
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
     }
-})
+});
 
 router.get('/userpage', async (req, res) => {
     try {
-        if (!req.session.loggedIn) {
-            return res.redirect("/user/login")
-        }
-        if (req.session.loggedIn) {
-            return res.render('userpage')
-        }
+        res.render('userpage', {
+            loggedIn: req.session.loggedIn,
+            userInfo: req.session.userInfo
+        });
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
     }
-})
+});
 
 
 
