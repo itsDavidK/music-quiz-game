@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/papercss@1.8.3/dist/paper.min.css">
+    <title>Music Quiz</title>
+</head>
+
+<body class ="paper">
+    <nav class="border fixed split-nav">
+        <div class="nav-brand">
+          <h3>Welcome Guest!</h3>
+        </div>
+        <div class="collapsible">
+          <input id="collapsible1" type="checkbox" name="collapsible1">
+          <label for="collapsible1">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+          </label>
+          <div class="collapsible-body">
+            <ul class="inline">
+              <li><a href="#">Sign Up</a></li>
+              <li><a href="#">Login</a></li>
+              <li>
+                <label class="paper-btn"for="modal-about">About</label>
+                <input class="modal-state" id="modal-about" type="checkbox">
+                <div class="modal">
+                <label class="modal-bg" for="modal-about"></label>
+             <div class="modal-body">
+             <h4 class="modal-title">What is This?</h4>
+            <p class="modal-text">Music Quiz was a 1 week project made during a bootcamp course created by Jordan Johnson, Sangmi Yun, David Kovalchuk, and a whole lot of guava.</p>
+          <label for="modal-about">Nice!</label>
+             </div>
+          </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    <div class="row flex-center">
+         <h1>End of Quiz!</h1>
+      </div>
+      <h2 class="row flex-center"><span class="badge success">6/10</span></h2>
+      
+      <div class="row flex-center">
+        <a href="/"><button class="btn-large btn-danger-outline">Home</button></a>
+        <a href="/play-alone"><button class="btn-large btn-success-outline">Play Again!</button></a>
+      </div>
+
+
+</body>
+
+</html>
