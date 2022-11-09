@@ -25,6 +25,7 @@ Score.init(
         },
         quiz_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             references: {
                 model: 'quiz',
                 key: 'id',
@@ -36,7 +37,7 @@ Score.init(
         timestamps: false,
         freezeTableName: true,
         underscored: true,
-        modelName: 'user',
+        modelName: 'score',
     }
 );
 
