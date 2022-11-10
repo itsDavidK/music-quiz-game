@@ -4,6 +4,7 @@ var answerButton = document.getElementsByClassName("btn-block");
 var musicArry = [];
 var score = 0;
 var quesionNum = 0;
+var wrong = 0;
 
 //get random music
 function getRanMusic() {
@@ -34,7 +35,7 @@ function getViews(musicInfo) {
             musicArry.push(response.result);
             checkingTwoItems();
         })
-        .catch(err => console.error(err));
+        .catch(err => console.log(err));
 }
 
 function checkingTwoItems() {
@@ -73,27 +74,28 @@ function checkingTwoItems() {
 
 function comparedata(event) {
     const element = event.target;
-    console.log('click!')
-    console.log(element)
     const answerData = element.getAttribute('data-view');
     if (answerData == "true") {
         score++;
         console.log("right")
     }
-    
+
     if (answerData == "false") {
-        console.log("worng");  
+        wrong++;
+        console.log("worng");
     }
 
-    if(quesionNum < 9) {
+    if (quesionNum < 2) {
         init();
     } else {
-        document.location.replace('/quiz-done');
         storescore();
-    }  
+    }
 }
 
 async function storescore() {
+    document.querySelector(".gamefunction").classList.add("hidden");
+    document.querySelector(".gamedone").classList.remove("hidden");
+    document.querySelector("#scoredisplay").innerHTML = (`${score} /10`)
     const response = await fetch('/api/scores/create', {
         method: 'POST',
         body: JSON.stringify({
@@ -102,10 +104,29 @@ async function storescore() {
         }),
         headers: { 'Content-Type': 'application/json' },
     });
+
+    await fetch('/api/users/current-user')
+        .then(response => {
+            return response.json();
+        }).then(data => {
+            console.log(data)
+            const upRight = score + data.profile.userRight
+            const upWrong = wrong + data.profile.userWrong
+            fetch('/api/profile/update', {
+                method: 'PUT',
+                body: JSON.stringify({
+                    username: data.username,
+                    userRight: upRight,
+                    userWrong: upWrong,
+                }),
+                headers: { 'Content-Type': 'application/json' },
+            })
+        })
 }
 
 // inital start
 function init() {
+    document.querySelector(".gamedone").classList.add("hidden");
     musicArry = [];
     quesionNum++;
     document.querySelector("#score").textContent = `score: ${score}`;
@@ -115,4 +136,5 @@ function init() {
 for (let i = 0; i < answerButton.length; i++) {
     answerButton[i].addEventListener('click', comparedata)
 }
+
 init();
