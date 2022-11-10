@@ -33,3 +33,8 @@
     top: 390px;
     font-size: 32px;
 }
+
+.failed {
+    visibility: hidden;
+    color: rgb(226, 19, 19);
+}

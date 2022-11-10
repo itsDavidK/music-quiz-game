@@ -3,6 +3,7 @@ const loginFormHandler = async (event) => {
 
     const username = document.querySelector('#username-login').value.trim();
     const password = document.querySelector('#password-login').value.trim();
+    const failure = document.querySelector('#failure');
 
     if (username && password) {
         const response = await fetch('/api/users/login', {
@@ -16,12 +17,13 @@ const loginFormHandler = async (event) => {
 
         if (response.ok) {
             document.location.replace('/');
-            alert("have fun!");
         } else {
-            alert('Failed to log in');
+            document.getElementById('failure').innerText = "Invalid Username or Password";
+            failure.style.visibility = "visible";
         }
     } else {
-        alert("No empty Blank!");
+        document.getElementById('failure').innerText = "Enter your Username & Password";
+        failure.style.visibility = "visible";
     }
 };
 
