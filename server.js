@@ -6,17 +6,40 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
-
+const http = require('http')
 const app = express();
 const PORT = process.env.PORT || 3001;
+const server = http.createServer(app)
 
-const http = require('http').Server(app)
-const io = require('socket.io')(http)
+const io = require('socket.io')(server)
 
+const players = []
 
+var varThatTellsArrayToPushOnOne = 1
 
 io.on('connection', function (socket) {
-  console.log('A user connected');
+
+
+
+  socket.on('player-name', name => {
+    console.log('hello')
+    console.log(name)
+    for (let i = 0; i < players.length; i++) {
+
+      if (players[i] === name) {
+        varThatTellsArrayToPushOnOne = 0
+      }
+
+    }
+    if (varThatTellsArrayToPushOnOne === 1) {
+      players.push(name)
+    }
+    console.log(players)
+    socket.emit('player-list', players)
+    socket.broadcast.emit('player-list', players)
+  })
+
+
 
   //Whenever someone disconnects this piece of code executed
   socket.on('disconnect', function () {
@@ -56,8 +79,8 @@ app.set('view engine', 'handlebars');
 // route position 
 app.use(routes);
 
-sequelize.sync({ force: false, alter: false}).then(function () {
-  app.listen(PORT, function () {
+sequelize.sync({ force: false }).then(function () {
+  server.listen(PORT, function () {
     console.log('App listening on PORT ' + PORT);
   });
 });
