@@ -3,8 +3,14 @@ const signupFormHandler = async (event) => {
     const username = document.querySelector('#usernameSignup').value.trim();
     const password = document.querySelector('#passwordSignup').value.trim();
     const passwordConfirm = document.querySelector('#passwordConfirm').value.trim();
+    const failure = document.querySelector('#failure');
 
     if (username && password && passwordConfirm) {
+        if (password.length < 8)
+        {
+            document.getElementById('failure').innerText = "Your password must be atleast 8 characters";
+            failure.style.visibility = "visible";
+        }
         if (password == passwordConfirm) {
             const response = await fetch('/api/users/create', {
                 method: 'POST',
@@ -30,13 +36,15 @@ const signupFormHandler = async (event) => {
 
                 document.location.replace('/');
             } else {
-                alert('use different username or password')
+                document.getElementById('failure').innerText = "This Username is already in Use";
+                failure.style.visibility = "visible";
             }
 
 
         }
     } else {
-        alert('No empty Blank!')
+        document.getElementById('failure').innerText = "Don't leave anything empty!";
+                failure.style.visibility = "visible";
     }
 }
 
