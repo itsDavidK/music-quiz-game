@@ -1,5 +1,5 @@
 .hidden {
-    visibility: hidden;
+    display: none;
 }
 
 .topleft {
@@ -7,10 +7,6 @@
     left: 30px;
     top: 60px;
     font-size: 25px;
-}
-
-.hidden {
-    display: none;
 }
 
 .ele1{
