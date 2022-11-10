@@ -6,5 +6,9 @@
     position: absolute;
     left: 30px;
     top: 60px;
-    font-size: 32px;
+    font-size: 25px;
+}
+
+.hidden {
+    display: none;
 }

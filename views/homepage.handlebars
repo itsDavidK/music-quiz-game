@@ -79,8 +79,13 @@
         <div class="card-body">
           <h4 class="card-title">Make a Quiz!</h4>
           <h5 class="card-subtitle">Say What?</h5>
+          {{#if loggedIn}}
           <p class="card-text">Create a quiz to test your friends whether they know as much as you!</p>
           <a href="/create-quiz"><button>Create Now!</button></a>
+          {{else}}
+          <p class="card-text">Login into your account and create your custom quiz!</p>
+          <button type="button" disabled>Create Now!</button>
+          {{/if}}
         </div>
         <img class="image-bottom" src="/assets/images/makeQuiz.jpg" alt="Image of a lightbulb lighting up.">
       </div>

@@ -17,14 +17,7 @@ User.init(
             allowNull: false,
             unique: true,
         },
-        userRight: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        userWrong: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
+
         password: {
             type: DataTypes.STRING,
             allowNull: false,

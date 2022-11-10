@@ -15,12 +15,25 @@ const signupFormHandler = async (event) => {
                 }),
                 headers: { 'Content-Type': 'application/json' },
             });
+            const innitialval = 0;
+            await fetch('/api/profile/create', {
+                method: 'POST',
+                body: JSON.stringify({
+                    userRight: innitialval,
+                    userWrong: innitialval,
+                    totalGame: innitialval
+                }),
+                headers: { 'Content-Type': 'application/json' },
+            });
 
             if (response.ok) {
+
                 document.location.replace('/');
             } else {
                 alert('use different username or password')
             }
+
+
         }
     } else {
         alert('No empty Blank!')

@@ -1,20 +1,32 @@
 const express = require('express');
 const router = express.Router();
-const { User, Score } = require('../../models');
+const { User, Score, Profile} = require('../../models');
 const bcrypt = require("bcrypt")
 
 
 router.get('/', (req, res) => {
-    User.findAll().then(allUser =>
+
+    User.findAll({include: [Profile]}
+    ).then(allUser => 
+
         res.json(allUser)
     )
+})
+
+router.get('/current-user', (req, res) => {
+    User.findOne({
+        include: [Profile],
+        where: {
+            id: req.session.userInfo.id
+        }
+    }).then(data => {
+        res.json(data)
+    })
 })
 
 router.post('/create', (req, res) => {
     User.create({
         username: req.body.username,
-        userRight: 0,
-        userWrong: 0,
         password: req.body.password
     }).then(data => {
 
