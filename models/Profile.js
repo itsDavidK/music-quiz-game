@@ -19,6 +19,10 @@ Profile.init(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        totalGame: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
         user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,

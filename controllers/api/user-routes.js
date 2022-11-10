@@ -25,8 +25,6 @@ router.get('/current-user', (req, res) => {
 router.post('/create', (req, res) => {
     User.create({
         username: req.body.username,
-        userRight: 0,
-        userWrong: 0,
         password: req.body.password
     }).then(data => {
 
