@@ -14,7 +14,7 @@ router.post("/create-quiz", async (req, res) => {
         const dbQuizData = await Quiz.create({
             quiz_title: req.body.quiz_title,
 
-            user_id: req.session.userInfo.id,
+            UserId: req.session.userInfo.id,
         })
         res.status(200).json(dbQuizData);
     } catch (err) {
@@ -28,7 +28,7 @@ router.post("/create-question", async (req, res) => {
     try {
         const dbQuestionData = await Question.create({
             URL: req.body.URL,
-            quiz_id: req.body.quiz_id,
+            QuizId: req.body.QuizId,
         })
         res.status(200).json(dbQuestionData);
     } catch (err) {

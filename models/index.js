@@ -5,48 +5,34 @@ const User = require('./User')
 const Profile = require('./Profile')
 
 Quiz.hasMany(Question, {
-    foreignKey: 'quiz_id',
     onDelete: 'CASCADE'
 })
 
 Question.belongsTo(Quiz, {
-    foreignKey: 'quiz_id',
     onDelete: 'CASCADE'
 })
 
-User.hasOne(Profile, {
-    foreignKey: 'user_id',
-})
+User.hasOne(Profile)
 
-Profile.belongsTo(User, {
-    foreignKey: 'user_id',
-})
+Profile.belongsTo(User)
 
-User.hasMany(Score, {
-    foreignKey: 'user_id',
-})
+User.hasMany(Score)
 
-Score.belongsTo(User, {
-    foreignKey: 'user_id',
-})
+Score.belongsTo(User)
 
 User.hasMany(Quiz, {
-    foreignKey: 'user_id',
     onDelete: 'CASCADE'
 })
 
 Quiz.belongsTo(User, {
-    foreignKey: 'user_id',
     onDelete: 'CASCADE'
 })
 
 Score.hasOne(Quiz, {
-    foreignKey: 'quiz_id',
     onDelete: 'CASCADE'
 })
 
 Quiz.belongsTo(Score, {
-    foreignKey: 'quiz_id',
     onDelete: 'CASCADE'
 })
 
