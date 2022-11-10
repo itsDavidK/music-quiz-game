@@ -109,7 +109,7 @@ async function storescore() {
         method: 'POST',
         body: JSON.stringify({
             score: score,
-            quiz_id: null,
+            QuizId: null,
         }),
         headers: { 'Content-Type': 'application/json' },
     });

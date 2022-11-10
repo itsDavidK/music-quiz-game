@@ -16,7 +16,7 @@ router.post('/create', (req, res) => {
         userRight: req.body.userRight,
         userWrong: req.body.userWrong,
         totalGame: req.body.totalGame,
-        user_id: req.session.userInfo.id
+        UserId: req.session.userInfo.id
     }).then(data => {
         res.status(200).json(data)
     }).catch(err => {
@@ -36,7 +36,7 @@ router.put('/update', async (req, res) => {
     },
         {
             where: {
-                user_id: req.session.userInfo.id
+                UserId: req.session.userInfo.id
             }
         }).then(data => {
             res.json(data);

@@ -93,6 +93,7 @@ router.get('/userpage', async (req, res) => {
             }).then(userData => {
                 const plainData = userData.get({ plain: true});
                 console.log(plainData)
+                res.json(plainData)
                 return res.render('userpage', {
                     plainData,
                     loggedIn: req.session.loggedIn,

@@ -1,10 +1,27 @@
 const musicCardOne = document.querySelector("#music-card-one");
 const musicCardTwo = document.querySelector("#music-card-two");
+const timerEl = document.querySelector("#timer");
 var answerButton = document.getElementsByClassName("btn-block");
 var musicArry = [];
 var score = 0;
 var questionNum = 0;
 var wrong = 0;
+
+function timmer() {
+    let timer = 15;
+    timeInterval= setInterval(function () {
+        timer--;
+        timerEl.textContent = timer + " seconds remaining";
+        // if the time left 0 stop the counter and display the message
+        if (timer === 0) {
+          clearInterval(timeInterval);
+          timer = 50;
+          questionCount = 0;
+          startEl.setAttribute("style", "display: unset");
+        }
+        //setting the speed of counter
+      }, 1000);
+}
 
 //get random music
 function getRanMusic() {
@@ -42,6 +59,8 @@ function checkingTwoItems() {
     if (musicArry.length < 2) {
         getRanMusic();
     } else {
+        timmer()
+        document.querySelector(".gamefunction").classList.remove("hidden");
         console.log(musicArry)
         const musicOne = musicArry[0];
         const musicTwo = musicArry[1];
@@ -100,7 +119,7 @@ async function storescore() {
         method: 'POST',
         body: JSON.stringify({
             score: score,
-            quiz_id: null,
+            QuizId: null,
         }),
         headers: { 'Content-Type': 'application/json' },
     });
@@ -129,6 +148,7 @@ async function storescore() {
 // inital start
 function init() {
     document.querySelector(".gamedone").classList.add("hidden");
+    document.querySelector(".gamefunction").classList.add("hidden");
     musicArry = [];
     questionNum++;
     document.querySelector("#score").textContent = `score: ${score}`;
