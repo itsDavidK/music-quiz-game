@@ -17,7 +17,11 @@ User.init(
             allowNull: false,
             unique: true,
         },
-        userlevel: {
+        userRight: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        userWrong: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },

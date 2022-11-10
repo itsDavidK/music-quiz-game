@@ -13,6 +13,18 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/lobby', async (req, res) => {
+    try {
+        res.render('lobby', {
+            loggedIn: req.session.loggedIn,
+            userInfo: req.session.userInfo
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
+
 router.get('/play-alone', async (req, res) => {
     try {
         res.render('quiz', {
@@ -25,17 +37,17 @@ router.get('/play-alone', async (req, res) => {
     }
 })
 
-router.get('/play-friends', async (req, res) => {
-    try {
-        res.render('quiz', {
-            loggedIn: req.session.loggedIn,
-            userInfo: req.session.userInfo
-        })
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
-    }
-})
+// router.get('/play-friends', async (req, res) => {
+//     try {
+//         res.render('quiz', {
+//             loggedIn: req.session.loggedIn,
+//             userInfo: req.session.userInfo
+//         })
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).json(err);
+//     }
+// })
 
 router.get('/create-quiz', async (req, res) => {
     try {

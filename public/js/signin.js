@@ -10,7 +10,8 @@ const signupFormHandler = async (event) => {
                 method: 'POST',
                 body: JSON.stringify({
                     username: username,
-                    password: password
+                    password: password,
+
                 }),
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -22,8 +23,8 @@ const signupFormHandler = async (event) => {
             }
         }
     } else {
-            alert('No empty Blank!')
-        }
+        alert('No empty Blank!')
+    }
 }
 
 document.querySelector(".signin-form").addEventListener('submit', signupFormHandler)
