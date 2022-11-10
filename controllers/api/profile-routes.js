@@ -15,13 +15,14 @@ router.post('/create', (req, res) => {
     Profile.create({
         userRight: req.body.userRight,
         userWrong: req.body.userWrong,
+        totalGame: req.body.totalGame,
         user_id: req.session.userInfo.id
     }).then(data => {
         res.status(200).json(data)
     }).catch(err => {
-    console.log(err);
-    res.status(500).json({ err: err })
-})
+        console.log(err);
+        res.status(500).json({ err: err })
+    })
 })
 
 router.put('/update', async (req, res) => {
@@ -30,7 +31,8 @@ router.put('/update', async (req, res) => {
     }
     Profile.update({
         userRight: req.body.userRight,
-        userWrong: req.body.userWrong
+        userWrong: req.body.userWrong,
+        totalGame: req.body.totalGame
     },
         {
             where: {

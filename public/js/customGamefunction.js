@@ -1,22 +1,30 @@
+var quizEl = document.getElementById('customQuiz')
+var quizNum = quizEl.getAttribute('data-quiz');
 const musicCardOne = document.querySelector("#music-card-one");
 const musicCardTwo = document.querySelector("#music-card-two");
 var answerButton = document.getElementsByClassName("btn-block");
 var musicArry = [];
+var qArry = [];
 var score = 0;
 var questionNum = 0;
 var wrong = 0;
 
-//get random music
-function getRanMusic() {
-    const requestUrl = 'https://kareoke.p.rapidapi.com/v1/song/random'
-
-    fetch(requestUrl)
+function getMusic() {
+    fetch(`/api/quiz/${quizNum}`)
         .then(response => {
             return response.json();
         }).then(data => {
-            getViews(data.youtube.url)
+            console.log(data)
+            for(let i = 0; i < data.questions.length; i++) {
+                qArry.push(data.questions[i].URL);
+            }
         })
-        .catch(err => console.error(err));
+}
+
+function gettingrandom() {
+    const ranNum = Math.floor(Math.random() * qArry.length)
+    getViews(qArry[ranNum])
+    console.log(qArry)
 }
 
 // with the link finding video info
@@ -33,6 +41,7 @@ function getViews(musicInfo) {
         .then(response => response.json())
         .then(response => {
             musicArry.push(response.result);
+            console.log(response)
             checkingTwoItems();
         })
         .catch(err => console.log(err));
@@ -40,7 +49,7 @@ function getViews(musicInfo) {
 
 function checkingTwoItems() {
     if (musicArry.length < 2) {
-        getRanMusic();
+        gettingrandom();
     } else {
         console.log(musicArry)
         const musicOne = musicArry[0];
@@ -85,7 +94,7 @@ function comparedata(event) {
         console.log("worng");
     }
 
-    if (questionNum < 10) {
+    if (quesionNum < 2) {
         init();
     } else {
         storescore();
@@ -127,16 +136,21 @@ async function storescore() {
 }
 
 // inital start
-function init() {
-    document.querySelector(".gamedone").classList.add("hidden");
+function start() {
+    document.querySelector("#score").textContent = `score: ${score}`;
     musicArry = [];
     questionNum++;
-    document.querySelector("#score").textContent = `score: ${score}`;
-    getRanMusic();
+    gettingrandom();
 }
 
-for (let i = 0; i < answerButton.length; i++) {
-    answerButton[i].addEventListener('click', comparedata)
+function init() {
+    document.querySelector(".gamedone").classList.add("hidden");
+    getMusic();
+    start();
 }
+
+// for (let i = 0; i < answerButton.length; i++) {
+//     answerButton[i].addEventListener('click', comparedata)
+// }
 
 init();
