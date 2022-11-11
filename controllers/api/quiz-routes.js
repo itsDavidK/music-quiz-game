@@ -49,5 +49,20 @@ router.get('/:id', (req, res) => {
     })
 })
 
+router.delete("/delete/:id", (req, res) => {
+    if(!req.session.loggedIn) {
+        return res.redirect('/login');
+    }
+    Quiz.destroy({
+        where: {
+            id: req.body.id
+        }
+    }).then(data => [
+        res.json(data)
+    ]).catch(err => {
+        console.log(err);
+        res.status(500).json({err:err})
+    })
+})
 
 module.exports = router;

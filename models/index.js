@@ -12,13 +12,21 @@ Question.belongsTo(Quiz, {
     onDelete: 'CASCADE'
 })
 
-User.hasOne(Profile)
+User.hasOne(Profile, {
+    onDelete: 'CASCADE'
+})
 
-Profile.belongsTo(User)
+Profile.belongsTo(User, {
+    onDelete: 'CASCADE'
+})
 
-User.hasMany(Score)
+User.hasMany(Score, {
+    onDelete: 'CASCADE'
+})
 
-Score.belongsTo(User)
+Score.belongsTo(User, {
+    onDelete: 'CASCADE'
+})
 
 User.hasMany(Quiz, {
     onDelete: 'CASCADE'
@@ -28,8 +36,12 @@ Quiz.belongsTo(User, {
     onDelete: 'CASCADE'
 })
 
-Quiz.hasMany(Score)
+Quiz.hasMany(Score, {
+    onDelete: 'CASCADE'
+})
 
-Score.belongsTo(Quiz)
+Score.belongsTo(Quiz, {
+    onDelete: 'CASCADE'
+})
 
 module.exports = { Question, Quiz, Score, User, Profile }
