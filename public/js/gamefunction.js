@@ -11,6 +11,7 @@ var wrong = 0;
 var gameover = false;
 var timer = 0;
 
+// timer for the game each question has 15 sec
 function countDown() {
     timer = 15;
     timeInterval = setInterval(function () {
@@ -19,8 +20,7 @@ function countDown() {
         // if the time left 0 stop the counter and display the message
         if (timer === 0) {
             clearInterval(timeInterval);
-            gameover = true;
-            checkingTwoItems()
+            comparedata("timeout")
         }
         //setting the speed of counter
     }, 1000);
@@ -58,12 +58,14 @@ function getViews(musicInfo) {
         .catch(err => console.log(err));
 }
 
+// with the items in the musicarry -> we are checking if there is only one item in the array do the process again if its two with the info we are filling in the text of the HTML (handlebar)
 function checkingTwoItems() {
     if (musicArry.length < 2) {
         getRanMusic();
     } else {
         if (gameover) {
-            storescore()
+            // storescore()
+            console.log("false")
         } else {
             countDown();
             loadingPage.style.display = "none"
@@ -99,18 +101,28 @@ function checkingTwoItems() {
     }
 }
 
-function comparedata(event) {
+function clickevent(event) {
     clearInterval(timeInterval);
     const element = event.target;
     const answerData = element.getAttribute('data-view');
+    comparedata(answerData)
+}
+
+// with the answer they are showing the result on the page and stop the timer 
+function comparedata(answerData) {
     if (answerData == "true") {
         score++;
-        resultEl.textContent = ("right")
+        resultEl.textContent = ("right");
     }
 
     if (answerData == "false") {
         wrong++;
         resultEl.textContent = ("wrong");
+    }
+
+    if (answerData == "timeout") {
+        wrong++;
+        resultEl.textContent = ("Timeout");
     }
 
     if (questionNum < 10) {
@@ -121,6 +133,7 @@ function comparedata(event) {
     }
 }
 
+// Post the score to the data base In here QuizId should be null beacause they are defalt game
 async function storescore() {
     document.querySelector(".gamefunction").classList.add("hidden");
     document.querySelector(".gamedone").classList.remove("hidden");
@@ -175,7 +188,7 @@ function init() {
 }
 
 for (let i = 0; i < answerButton.length; i++) {
-    answerButton[i].addEventListener('click', comparedata)
+    answerButton[i].addEventListener('click', clickevent)
 }
 
 init();

@@ -16,3 +16,4 @@ const deleteBlogFormHandler = async (event) => {
 }
 
 deleteEl.addEventListener('click', deleteBlogFormHandler)
+
