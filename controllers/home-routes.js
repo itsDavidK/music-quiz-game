@@ -14,6 +14,8 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/lobby', async (req, res) => {
+
+
     try {
         res.render('lobby', {
             loggedIn: req.session.loggedIn,
@@ -103,11 +105,13 @@ router.get('/userpage', async (req, res) => {
                     id: req.session.userInfo.id
                 }
             }).then(userData => {
+
                 const plainData = userData.get({ plain: true});
                 console.log(plainData) 
                 const level = parseInt(plainData.Profile.userRight/50);
                 const leftover = (plainData.Profile.userRight%50);
                 const percent = (leftover*2)
+
                 return res.render('userpage', {
                     level,
                     percent,
@@ -116,7 +120,7 @@ router.get('/userpage', async (req, res) => {
                     userInfo: req.session.userInfo
                 })
             }).catch(err => {
-                res.status(500).json({msg:"error occurred",err});
+                res.status(500).json({ msg: "error occurred", err });
             })
         }
 
