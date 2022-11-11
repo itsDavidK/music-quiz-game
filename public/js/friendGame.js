@@ -10,15 +10,14 @@ let role = 'user'
 let playerNum = 0
 let currentPlayer = 'user'
 
+let answerData
 
-
-
+const timerEl = document.querySelector("#timer");
 const musicCardOne = document.querySelector("#music-card-one");
 const musicCardTwo = document.querySelector("#music-card-two");
-const loadingPage = document.querySelector("#loadingBody");
-const timerEl = document.querySelector("#timer");
-const resultEl = document.querySelector(".resultQuiz");
 var answerButton = document.getElementsByClassName("btn-block");
+const loadingPage = document.querySelector("#loadingBody");
+const resultEl = document.querySelector(".resultQuiz");
 var musicArry = [];
 var score = 0;
 var questionNum = 0;
@@ -27,6 +26,7 @@ var gameover = false;
 var timer = 0;
 
 
+// timer for the game each question has 15 sec
 function countDown() {
     timer = 15;
     timeInterval = setInterval(function () {
@@ -35,15 +35,12 @@ function countDown() {
         // if the time left 0 stop the counter and display the message
         if (timer === 0) {
             clearInterval(timeInterval);
-            timer = 15
-
-
-            init()
-
+            comparedata()
         }
         //setting the speed of counter
     }, 1000);
 }
+
 
 
 socket.emit('player-name', myUser.textContent)
@@ -117,6 +114,8 @@ function checkingTwoItems() {
             socket.emit('send-vids', musicArry)
         }
         countDown();
+        loadingPage.style.display = "none"
+        document.querySelector(".gamefunction").classList.remove("hidden");
         console.log(musicArry)
         const musicOne = musicArry[0];
         const musicTwo = musicArry[1];
@@ -147,9 +146,13 @@ function checkingTwoItems() {
     }
 }
 
-function comparedata(event) {
+function clickevent(event) {
     const element = event.target;
-    const answerData = element.getAttribute('data-view');
+    answerData = element.getAttribute('data-view');
+}
+
+function comparedata() {
+
     if (answerData == "true") {
         score++;
         console.log("right")
@@ -161,6 +164,7 @@ function comparedata(event) {
     }
 
     if (questionNum < 10) {
+        loadingPage.style.display = "flex"
         if (role === "host") {
 
             init();
@@ -183,30 +187,34 @@ async function storescore() {
         headers: { 'Content-Type': 'application/json' },
     });
 
-    await fetch('/api/users/current-user')
+    await fetch('/api/profile/current-user')
         .then(response => {
             return response.json();
         }).then(data => {
-            console.log(data)
-            const upRight = score + data.profile.userRight
-            const upWrong = wrong + data.profile.userWrong
-            const uptotal = data.profile.totalGame + 1;
+            const upRight = score + data.userRight;
+            const upWrong = wrong + data.userWrong;
+            const uptotal = data.totalGame + 1;
+            const userid = data.UserId;
             fetch('/api/profile/update', {
                 method: 'PUT',
                 body: JSON.stringify({
-                    username: data.username,
+                    id: data.id,
                     userRight: upRight,
                     userWrong: upWrong,
-                    totalGame: uptotal
+                    totalGame: uptotal,
+                    UserId: userid,
                 }),
                 headers: { 'Content-Type': 'application/json' },
             })
+        }).catch(err => {
+            return;
         })
 }
 
 // inital start
 function init() {
     document.querySelector(".gamedone").classList.add("hidden");
+    document.querySelector(".gamefunction").classList.add("hidden");
     musicArry = [];
     questionNum++;
     document.querySelector("#score").textContent = `score: ${score}`;
@@ -216,14 +224,13 @@ function init() {
 socket.on('receive-vids', data => {
     document.querySelector(".gamedone").classList.add("hidden");
     document.querySelector("#score").textContent = `score: ${score}`;
-    console.log(data)
     musicArry = data;
     checkingTwoItems()
 })
 
 
 for (let i = 0; i < answerButton.length; i++) {
-    answerButton[i].addEventListener('click', comparedata)
+    answerButton[i].addEventListener('click', clickevent)
 }
 
 
