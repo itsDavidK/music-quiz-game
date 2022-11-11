@@ -27,4 +27,14 @@ router.post('/create', (req, res) => {
     }
 });
 
+router.get('/:id', (req, res) => {
+    Score.findAll({
+        where: {
+            QuizId: req.params.id
+        }
+    }).then(data => {
+        res.json(data)
+    })
+})
+
 module.exports = router;
