@@ -49,7 +49,28 @@
             <h1>Users:</h1>
             <p id="myUser">{{userInfo.username}}</p>
         </div>
-        <div id="startGame" class="row flex-center"><button>start game</button></div>
+        <div>
+            <h4>Custom?</h4>
+            <table class="table-hover">
+                <thead>
+                    <tr>
+                        <th>Quiz ID</th>
+                        <th>Name of Quiz</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each plainData.Quizzes}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{quiz_title}}</td>
+                        <td><button id="quiz{{id}}" class="btn-small btn-success-outline">Start This
+                                Quiz</button> </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <div id="startGame" class="row flex-center"><button>Start Random Game</button></div>
 
     </div>
     <div id="game" class="hidden">

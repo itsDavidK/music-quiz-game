@@ -13,19 +13,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/lobby', async (req, res) => {
 
-
-    try {
-        res.render('lobby', {
-            loggedIn: req.session.loggedIn,
-            userInfo: req.session.userInfo
-        });
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
-    }
-});
 
 router.get('/play-alone', async (req, res) => {
     try {
@@ -106,11 +94,11 @@ router.get('/userpage', async (req, res) => {
                 }
             }).then(userData => {
 
-                const plainData = userData.get({ plain: true});
-                console.log(plainData) 
-                const level = parseInt(plainData.Profile.userRight/50);
-                const leftover = (plainData.Profile.userRight%50);
-                const percent = (leftover*2)
+                const plainData = userData.get({ plain: true });
+                console.log(plainData)
+                const level = parseInt(plainData.Profile.userRight / 50);
+                const leftover = (plainData.Profile.userRight % 50);
+                const percent = (leftover * 2)
 
                 return res.render('userpage', {
                     level,
@@ -130,13 +118,38 @@ router.get('/userpage', async (req, res) => {
     }
 });
 
+router.get('/lobby', async (req, res) => {
+
+
+    try {
+
+        User.findOne({
+            include: [Profile, Quiz],
+            where: {
+                id: req.session.userInfo.id
+            }
+        }).then(data => {
+            const plainData = data.get({ plain: true });
+            return res.render('lobby', {
+                plainData,
+                loggedIn: req.session.loggedIn,
+                userInfo: req.session.userInfo
+            });
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
+
+
 router.get('/quiz-score', async (req, res) => {
     try {
         Score.findAll({
             where: {
                 QuizId: null
             }
-        }).then(data =>{
+        }).then(data => {
             console.log(data)
         })
         res.render('scoreboard', {

@@ -24,7 +24,7 @@ var questionNum = 0;
 var wrong = 0;
 var gameover = false;
 var timer = 0;
-
+let gameType = 'rand'
 
 // timer for the game each question has 15 sec
 function countDown() {
@@ -55,6 +55,8 @@ function playerConnectedOrDisconnected(players) {
 }
 socket.emit('sendName', myUser.textContent)
 socket.on('start-game-user', () => {
+    document.querySelector(".gamefunction").classList.add("hidden");
+    document.querySelector(".gamedone").classList.add("hidden"); ``
     goToGame()
 })
 start.addEventListener('click', () => {
@@ -69,7 +71,17 @@ function goToGame() {
     game.classList.remove('hidden')
 }
 
-
+function getMusic() {
+    fetch(`/api/quiz/${quizNum}`)
+        .then(response => {
+            return response.json();
+        }).then(data => {
+            for (let i = 0; i < data.Questions.length; i++) {
+                qArry.push(data.Questions[i].URL);
+            }
+            twoNumber();
+        })
+}
 
 
 
@@ -105,6 +117,7 @@ function getViews(musicInfo) {
         })
         .catch(err => console.log(err));
 }
+
 
 function checkingTwoItems() {
     if (musicArry.length < 2) {
@@ -155,16 +168,17 @@ function comparedata() {
 
     if (answerData == "true") {
         score++;
-        console.log("right")
+        resultEl.textContent = ("right");
     }
 
     if (answerData == "false") {
         wrong++;
-        console.log("worng");
+        resultEl.textContent = ("wrong");
     }
-
+    questionNum++;
     if (questionNum < 10) {
         loadingPage.style.display = "flex"
+        document.querySelector(".gamefunction").classList.add("hidden");
         if (role === "host") {
 
             init();
@@ -216,16 +230,24 @@ function init() {
     document.querySelector(".gamedone").classList.add("hidden");
     document.querySelector(".gamefunction").classList.add("hidden");
     musicArry = [];
-    questionNum++;
+
     document.querySelector("#score").textContent = `score: ${score}`;
-    getRanMusic();
+    if (gameType === 'rand') {
+        getRanMusic();
+
+    }
+    if (gameType === 'custom') {
+        getMusic()
+    }
 }
 
 socket.on('receive-vids', data => {
     document.querySelector(".gamedone").classList.add("hidden");
+    document.querySelector(".gamefunction").classList.add("hidden");
     document.querySelector("#score").textContent = `score: ${score}`;
     musicArry = data;
     checkingTwoItems()
+
 })
 
 
