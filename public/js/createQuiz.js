@@ -49,7 +49,7 @@ async function questionSubmitHandler(event) {
             method: 'POST',
             body: JSON.stringify({
                 URL: URLInput.value,
-                quiz_id: quizId,
+                QuizId: quizId,
             }),
             headers: {
                 'Content-Type': 'application/json',

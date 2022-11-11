@@ -16,7 +16,7 @@ router.post('/create', (req, res) => {
         userRight: req.body.userRight,
         userWrong: req.body.userWrong,
         totalGame: req.body.totalGame,
-        user_id: req.session.userInfo.id
+        UserId: req.session.userInfo.id
     }).then(data => {
         res.status(200).json(data)
     }).catch(err => {
@@ -32,11 +32,12 @@ router.put('/update', async (req, res) => {
     Profile.update({
         userRight: req.body.userRight,
         userWrong: req.body.userWrong,
-        totalGame: req.body.totalGame
+        totalGame: req.body.totalGame,
+        UserId: req.body.UserId,
     },
         {
             where: {
-                user_id: req.session.userInfo.id
+                id: req.body.id
             }
         }).then(data => {
             res.json(data);
@@ -46,4 +47,18 @@ router.put('/update', async (req, res) => {
         })
 });
 
+router.get('/current-user', (req, res) => {
+    if (!req.session.userInfo) {
+        return res.redirect('/login')
+    }
+    Profile.findOne({
+        where: {
+            UserId: req.session.userInfo.id,
+        }
+    }).then(data => {
+        res.json(data);
+    }).catch(err => { 
+        res.status(500).json({ err: err })
+    })
+})
 module.exports = router; 

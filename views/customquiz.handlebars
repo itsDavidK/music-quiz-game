@@ -1,4 +1,4 @@
-<body class="paper">
+<body class="paper" id="gamepart">
   <nav class="border fixed split-nav">
     <div class="nav-brand">
       {{#if loggedIn}}
@@ -40,10 +40,47 @@
       </div>
     </div>
   </nav>
+  <section id="loadingBody">
+    <div class="loadingText">
+      <p class="resultQuiz">Generating your Quiz!</p>
+    </div>
+
+
+    <div class="loader">
+
+      <div class="ele1"></div>
+      <div class="ele1"></div>
+      <div class="ele1"></div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+    <script>
+
+      anime({
+        targets: '.loader .ele1',
+        loop: true,
+        scale: [
+          { value: '.1', duration: 1200, easing: 'easeOutSine' },
+          { value: '1', duration: 1200, easing: 'easeInQuad' },
+        ],
+        translateY: [
+          { value: '-45', duration: 1200, easing: 'easeOutSine' },
+          { value: '0', duration: 1200, easing: 'easeInQuad' },
+        ],
+        delay: anime.stagger(300)
+      });
+
+    </script>
+
+  </section>
+
   <section class="gamefunction" id="customQuiz" data-quiz="{{currentQuiz}}">
-    <div class="topleft"><a href="/">
+    <div class="topleft">
+      <a href="/">
         <p><span class="badge secondary">&lt;-</span> Take me Home!</p>
-      </a></div>
+      </a>
+      <p id="timer"></p>
+    </div>
     <div class="row flex-center">
       <h1>Which Has More Views?</h1>
     </div>

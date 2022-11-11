@@ -15,8 +15,8 @@ router.post('/create', (req, res) => {
     } else {
         Score.create({
             score: req.body.score,
-            user_id: req.session.userInfo.id,
-            quiz_id: req.body.quiz_id
+            UserId: req.session.userInfo.id,
+            QuizId: req.body.QuizId
         }).then(data => {
             req.session.currentScore = data.score
             res.json(data);

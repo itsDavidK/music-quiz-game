@@ -64,21 +64,21 @@
   
     <input id="tab2" type="radio" name="tabs">
     <label for="tab2">-Created Quizzes-</label>
-  
+    
     <div class="content" id="content1">
       <table>
         <tbody>
           <tr>
             <td>Total Correct Answers:</td>
-            <td>{{plainData.profile.userRight}}</td>
+            <td>{{plainData.Profile.userRight}}</td>
           </tr>
           <tr>
             <td>Total Wrong Answers:</td>
-            <td>{{plainData.profile.userWrong}}</td>
+            <td>{{plainData.Profile.userWrong}}</td>
           </tr>
           <tr>
             <td>Games Played:</td>
-            <td>{{plainData.profile.totalGame}}</td>
+            <td>{{plainData.Profile.totalGame}}</td>
           </tr>
         </tbody>
       </table>
@@ -93,11 +93,11 @@
           </tr>
         </thead>
         <tbody>
-          {{#each plainData.quizzes}}
+          {{#each plainData.Quizzes}}
           <tr>
-            <td>{{quiz_title}}</td>
             <td>{{id}}</td>
-            <td><a href="/play-custom/{{id}}"><button class="btn-small btn-success-outline">Play</button></a><button class="btn-small btn-danger-outline" data-id="{{id}}">Delete</button></td>
+            <td>{{quiz_title}}</td>
+            <td><a href="/play-custom/{{id}}"><button class="btn-small btn-success-outline">Play</button></a><button class="btn-small btn-danger-outline" id="delete" data-id="{{id}}">Delete</button></td>
           </tr>
           {{/each}}
         </tbody>
