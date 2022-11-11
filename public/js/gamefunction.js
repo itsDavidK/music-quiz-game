@@ -143,7 +143,6 @@ async function storescore() {
             const upWrong = wrong + data.userWrong;
             const uptotal = data.totalGame + 1;
             const userid = data.UserId;
-
             console.log(upRight);
             console.log(upWrong);
             console.log(uptotal);

@@ -16,3 +16,10 @@ const deleteBlogFormHandler = async (event) => {
 }
 
 deleteEl.addEventListener('click', deleteBlogFormHandler)
+
+const level = fetch('/api/current-user')
+.then(res => {
+    res.json(); 
+}).then(data => {
+    console.log(data);
+})

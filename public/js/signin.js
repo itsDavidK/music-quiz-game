@@ -27,7 +27,8 @@ const signupFormHandler = async (event) => {
                 body: JSON.stringify({
                     userRight: innitialval,
                     userWrong: innitialval,
-                    totalGame: innitialval
+                    totalGame: innitialval,
+                    userPrcnt: innitialval
                 }),
                 headers: { 'Content-Type': 'application/json' },
             });
