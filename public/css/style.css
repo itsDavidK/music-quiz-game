@@ -1,6 +1,8 @@
+
 .hidden {
     display: none;
 }
+
 
 .topleft {
     position: absolute;
@@ -23,6 +25,7 @@
     justify-content: center;
     align-items: center;
 }
+
 
 .loadingText {
     position: absolute;

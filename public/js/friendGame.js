@@ -1,3 +1,18 @@
+
+const socket = io();
+const usersDiv = document.getElementById('usersDiv')
+const opponentP = document.createElement('p')
+const myUser = document.getElementById('myUser')
+const start = document.getElementById('startGame')
+const names = document.getElementById('lobbyDiv')
+const game = document.getElementById('game')
+let role = 'user'
+let playerNum = 0
+let currentPlayer = 'user'
+
+
+
+
 const musicCardOne = document.querySelector("#music-card-one");
 const musicCardTwo = document.querySelector("#music-card-two");
 const loadingPage = document.querySelector("#loadingBody");
@@ -11,7 +26,7 @@ var wrong = 0;
 var gameover = false;
 var timer = 0;
 
-// timer for the game each question has 15 sec
+
 function countDown() {
     timer = 15;
     timeInterval = setInterval(function () {
@@ -20,11 +35,46 @@ function countDown() {
         // if the time left 0 stop the counter and display the message
         if (timer === 0) {
             clearInterval(timeInterval);
-            comparedata("timeout")
+            timer = 15
+
+
+            init()
+
         }
         //setting the speed of counter
     }, 1000);
 }
+
+
+socket.emit('player-name', myUser.textContent)
+socket.on('player-list', players => {
+    console.log(`list of players: ${players}`)
+    playerConnectedOrDisconnected(players)
+})
+
+function playerConnectedOrDisconnected(players) {
+    console.log('append')
+    myUser.innerText = players
+}
+socket.emit('sendName', myUser.textContent)
+socket.on('start-game-user', () => {
+    goToGame()
+})
+start.addEventListener('click', () => {
+    goToGame()
+    role = 'host'
+    socket.emit('start-game-host', role)
+    init();
+})
+
+function goToGame() {
+    names.classList.add('hidden')
+    game.classList.remove('hidden')
+}
+
+
+
+
 
 //get random music
 function getRanMusic() {
@@ -36,7 +86,7 @@ function getRanMusic() {
         }).then(data => {
             getViews(data.youtube.url)
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 }
 
 // with the link finding video info
@@ -53,19 +103,20 @@ function getViews(musicInfo) {
         .then(response => response.json())
         .then(response => {
             musicArry.push(response.result);
+
             checkingTwoItems();
         })
         .catch(err => console.log(err));
 }
 
-// with the items in the musicarry -> we are checking if there is only one item in the array do the process again if its two with the info we are filling in the text of the HTML (handlebar)
 function checkingTwoItems() {
     if (musicArry.length < 2) {
         getRanMusic();
     } else {
+        if (role === 'host') {
+            socket.emit('send-vids', musicArry)
+        }
         countDown();
-        loadingPage.style.display = "none"
-        document.querySelector(".gamefunction").classList.remove("hidden");
         console.log(musicArry)
         const musicOne = musicArry[0];
         const musicTwo = musicArry[1];
@@ -96,40 +147,29 @@ function checkingTwoItems() {
     }
 }
 
-
-function clickevent(event) {
-    clearInterval(timeInterval);
+function comparedata(event) {
     const element = event.target;
     const answerData = element.getAttribute('data-view');
-    comparedata(answerData)
-}
-
-// with the answer they are showing the result on the page and stop the timer 
-function comparedata(answerData) {
     if (answerData == "true") {
         score++;
-        resultEl.textContent = ("right");
+        console.log("right")
     }
 
     if (answerData == "false") {
         wrong++;
-        resultEl.textContent = ("wrong");
-    }
-
-    if (answerData == "timeout") {
-        wrong++;
-        resultEl.textContent = ("Timeout");
+        console.log("worng");
     }
 
     if (questionNum < 10) {
-        init();
-        loadingPage.style.display = "flex"
+        if (role === "host") {
+
+            init();
+        }
     } else {
         storescore();
     }
 }
 
-// Post the score to the data base In here QuizId should be null beacause they are defalt game
 async function storescore() {
     document.querySelector(".gamefunction").classList.add("hidden");
     document.querySelector(".gamedone").classList.remove("hidden");
@@ -138,52 +178,52 @@ async function storescore() {
         method: 'POST',
         body: JSON.stringify({
             score: score,
-            QuizId: null,
+            quiz_id: null,
         }),
         headers: { 'Content-Type': 'application/json' },
     });
 
-    await fetch('/api/profile/current-user')
+    await fetch('/api/users/current-user')
         .then(response => {
             return response.json();
         }).then(data => {
             console.log(data)
-            const upRight = score + data.userRight;
-            const upWrong = wrong + data.userWrong;
-            const uptotal = data.totalGame + 1;
-            const userid = data.UserId;
-            console.log(upRight);
-            console.log(upWrong);
-            console.log(uptotal);
-
+            const upRight = score + data.profile.userRight
+            const upWrong = wrong + data.profile.userWrong
+            const uptotal = data.profile.totalGame + 1;
             fetch('/api/profile/update', {
                 method: 'PUT',
                 body: JSON.stringify({
-                    id: data.id,
+                    username: data.username,
                     userRight: upRight,
                     userWrong: upWrong,
-                    totalGame: uptotal,
-                    UserId: userid,
+                    totalGame: uptotal
                 }),
                 headers: { 'Content-Type': 'application/json' },
             })
-        }).catch(err => {
-            return;
         })
 }
 
 // inital start
 function init() {
     document.querySelector(".gamedone").classList.add("hidden");
-    document.querySelector(".gamefunction").classList.add("hidden");
     musicArry = [];
     questionNum++;
     document.querySelector("#score").textContent = `score: ${score}`;
     getRanMusic();
 }
 
+socket.on('receive-vids', data => {
+    document.querySelector(".gamedone").classList.add("hidden");
+    document.querySelector("#score").textContent = `score: ${score}`;
+    console.log(data)
+    musicArry = data;
+    checkingTwoItems()
+})
+
+
 for (let i = 0; i < answerButton.length; i++) {
-    answerButton[i].addEventListener('click', clickevent)
+    answerButton[i].addEventListener('click', comparedata)
 }
 
-init();
+
