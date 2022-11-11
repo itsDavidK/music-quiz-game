@@ -1,6 +1,8 @@
+
 .hidden {
     display: none;
 }
+
 
 .topleft {
     position: absolute;
@@ -24,6 +26,7 @@
     align-items: center;
 }
 
+
 .loadingText {
     position: absolute;
     top: 390px;
@@ -34,4 +37,3 @@
     visibility: hidden;
     color: rgb(226, 19, 19);
 }
-

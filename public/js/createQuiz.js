@@ -72,9 +72,10 @@ async function questionSubmitHandler(event) {
 
 function submitquizHandler() {
     if(arryURL.length%2 === 1) {
-        alert("The link should be even number");
+        document.querySelector(".evennumber").innerHTML= ("We need even number of URL to create your Quiz")
+        return;
     } else {
-        alert('its saved!');
+        document.querySelector(".evennumber").innerHTML= ("Saved!")
         document.location.replace('/');
     }
 }

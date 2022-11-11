@@ -1,9 +1,8 @@
-const deleteEl = document.querySelector("#delete");
-const deleteData = deleteEl.getAttribute("data-id");
+const deleteEl = document.getElementsByClassName("delete");
 
 const deleteBlogFormHandler = async (event) => {
+    const deleteData = event.target.getAttribute("data-id");
     event.preventDefault();
-    console.log(deleteData)
     const response = await fetch(`/api/quiz/delete/${deleteData}`, {
         method: 'DELETE',
         body: JSON.stringify({
@@ -15,11 +14,7 @@ const deleteBlogFormHandler = async (event) => {
     location.reload();
 }
 
-deleteEl.addEventListener('click', deleteBlogFormHandler)
+for(let i = 0 ; i < deleteEl.length; i++) {
+    deleteEl[i].addEventListener('click', deleteBlogFormHandler)
+}
 
-const level = fetch('/api/current-user')
-.then(res => {
-    res.json(); 
-}).then(data => {
-    console.log(data);
-})

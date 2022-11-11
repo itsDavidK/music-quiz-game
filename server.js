@@ -3,7 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-
+const { v4: uuidV4 } = require('uuid')
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
 const http = require('http')
@@ -12,10 +12,11 @@ const PORT = process.env.PORT || 3001;
 const server = http.createServer(app)
 
 const io = require('socket.io')(server)
-
+app.set('socketio', io)
 const players = []
 
 var varThatTellsArrayToPushOnOne = 1
+
 
 io.on('connection', function (socket) {
 
@@ -39,7 +40,14 @@ io.on('connection', function (socket) {
     socket.broadcast.emit('player-list', players)
   })
 
+  socket.on('start-game-host', data => {
+    socket.broadcast.emit('start-game-user')
+  })
 
+  socket.on('send-vids', data => {
+    console.log(data)
+    socket.broadcast.emit('receive-vids', data)
+  })
 
   //Whenever someone disconnects this piece of code executed
   socket.on('disconnect', function () {
