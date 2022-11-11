@@ -41,6 +41,9 @@ const signupFormHandler = async (event) => {
             }
 
 
+        } else {
+            document.getElementById('failure').innerText = "Both password should be matched!";
+            failure.style.visibility = "visible";
         }
     } else {
         document.getElementById('failure').innerText = "Don't leave anything empty!";

@@ -95,8 +95,8 @@
         <tbody>
           {{#each plainData.Quizzes}}
           <tr>
-            <td>{{quiz_title}}</td>
             <td>{{id}}</td>
+            <td>{{quiz_title}}</td>
             <td><a href="/play-custom/{{id}}"><button class="btn-small btn-success-outline">Play</button></a><button class="btn-small btn-danger-outline" data-id="{{id}}">Delete</button></td>
           </tr>
           {{/each}}
