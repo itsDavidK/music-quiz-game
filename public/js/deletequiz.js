@@ -18,4 +18,3 @@ for(let i = 0 ; i < deleteEl.length; i++) {
     deleteEl[i].addEventListener('click', deleteBlogFormHandler)
 }
 
-
