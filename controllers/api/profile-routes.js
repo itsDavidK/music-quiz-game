@@ -3,6 +3,7 @@ const router = express.Router();
 const { User, Profile } = require('../../models');
 
 
+
 router.get('/', (req, res) => {
     Profile.findAll({
         include: [User]
@@ -57,7 +58,7 @@ router.get('/current-user', (req, res) => {
         }
     }).then(data => {
         res.json(data);
-    }).catch(err => { 
+    }).catch(err => {
         res.status(500).json({ err: err })
     })
 })

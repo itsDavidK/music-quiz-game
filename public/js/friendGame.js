@@ -15,15 +15,35 @@ let currentPlayer = 'user'
 
 const musicCardOne = document.querySelector("#music-card-one");
 const musicCardTwo = document.querySelector("#music-card-two");
+const loadingPage = document.querySelector("#loadingBody");
+const timerEl = document.querySelector("#timer");
+const resultEl = document.querySelector(".resultQuiz");
 var answerButton = document.getElementsByClassName("btn-block");
 var musicArry = [];
 var score = 0;
 var questionNum = 0;
 var wrong = 0;
+var gameover = false;
+var timer = 0;
 
 
+function countDown() {
+    timer = 15;
+    timeInterval = setInterval(function () {
+        timer--;
+        timerEl.textContent = timer + " seconds remaining";
+        // if the time left 0 stop the counter and display the message
+        if (timer === 0) {
+            clearInterval(timeInterval);
+            timer = 15
 
 
+            init()
+
+        }
+        //setting the speed of counter
+    }, 1000);
+}
 
 
 socket.emit('player-name', myUser.textContent)
@@ -96,7 +116,7 @@ function checkingTwoItems() {
         if (role === 'host') {
             socket.emit('send-vids', musicArry)
         }
-
+        countDown();
         console.log(musicArry)
         const musicOne = musicArry[0];
         const musicTwo = musicArry[1];
