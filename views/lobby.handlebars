@@ -43,9 +43,62 @@
             </div>
         </div>
     </nav>
-    <div id="usersDiv" class="row flex-center">
-        <h1>Users:</h1>
-        <p id="myUser">{{userInfo.username}}</p>
+    <div id="lobbyDiv">
+
+        <div id="usersDiv" class="row flex-center">
+            <h1>Users:</h1>
+            <p id="myUser">{{userInfo.username}}</p>
+        </div>
+        <div id="startGame" class="row flex-center"><button>start game</button></div>
+
     </div>
-    <script src="/js/lobby.js"></script>
+    <div id="game" class="hidden">
+        <section class="gamefunction">
+            <div class="topleft"><a href="/">
+                    <p><span class="badge secondary">&lt;-</span> Take me Home!</p>
+                </a></div>
+            <div class="row flex-center">
+                <h1>Which Has More Views?</h1>
+            </div>
+
+            <div class="row flex-center">
+                <div class="card" style="width: 20rem;" id="music-card-one">
+                    <img id="musicOneImage">
+                    <div class="card-body">
+                        <h4 class="card-title" id="titleOne">Song Title Here</h4>
+                        <div class="col-12 col">
+                            <button class="btn-block" id="higherOne">HIGHER!</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="width: 20rem;" id="music-card-two">
+                    <img id="musicTwoImage" alt="Image of a YouTube video thumbnail.">
+                    <div class="card-body">
+                        <h4 class="card-title" id="titleTwo">Song Title Here</h4>
+                        <div class="col-12 col">
+                            <button class="btn-block" id="higherTwo">HIGHER!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row flex-center">
+                <p id="score"></p>
+            </div>
+        </section>
+
+        <section class="gamedone">
+            <div class="row flex-center">
+                <h1>End of Quiz!</h1>
+            </div>
+            <h2 class="row flex-center"><span class="badge success" id="scoredisplay"></span></h2>
+
+            <div class="row flex-center">
+                <a href="/"><button class="btn-large btn-danger-outline">Home</button></a>
+                <a href="/lobby"><button class="btn-large btn-success-outline">Play Again!</button></a>
+            </div>
+        </section>
+    </div>
+    <script src="/js/friendGame.js"></script>
+
 </body>
