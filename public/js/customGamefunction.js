@@ -11,7 +11,6 @@ var musicArry = [];
 var score = 0;
 var questionNum = 0;
 var wrong = 0;
-var gameover = false;
 var timer = 0;
 
 // timer function every time when they come back(next question) it starts from
@@ -23,8 +22,7 @@ function countDown() {
         // if the time left 0 stop the counter and display the message
         if (timer === 0) {
             clearInterval(timeInterval);
-            gameover = true;
-            checkingTwoItems()
+            comparedata("timeout")
         }
         //setting the speed of counter
     }, 1000);
@@ -36,7 +34,7 @@ function getMusic() {
         .then(response => {
             return response.json();
         }).then(data => {
-            for(let i = 0; i < data.Questions.length; i++) {
+            for (let i = 0; i < data.Questions.length; i++) {
                 qArry.push(data.Questions[i].URL);
             }
             twoNumber();
@@ -49,7 +47,7 @@ function twoNumber() {
     console.log(qArry)
     getViews(qArry[ranNum])
     qArry.splice(ranNum, 1)
-    
+
     console.log(ranNum)
 }
 
@@ -78,46 +76,45 @@ function checkingTwoItems() {
     if (musicArry.length < 2) {
         twoNumber();
     } else {
-        if (gameover) {
-            storescore()
+        countDown();
+        loadingPage.style.display = "none"
+        document.querySelector(".gamefunction").classList.remove("hidden");
+
+        const musicOne = musicArry[0];
+        const musicTwo = musicArry[1];
+
+        document.querySelector('#musicOneImage').setAttribute("src", `${musicOne.thumbnail.url}`)
+        document.querySelector('#musicTwoImage').setAttribute("src", `${musicTwo.thumbnail.url}`)
+
+        document.querySelector('#titleOne').innerHTML = (`${musicOne.title}`)
+        document.querySelector('#titleTwo').innerHTML = (`${musicTwo.title}`)
+
+        var oneAnswer = "";
+        var twoAnswer = "";
+
+        if (musicOne.views > musicTwo.views) {
+            oneAnswer = true;
+            twoAnswer = false;
+        } else if (musicTwo.views > musicOne.views) {
+            oneAnswer = false;
+            twoAnswer = true;
         } else {
-            countDown();
-            loadingPage.style.display = "none"
-            document.querySelector(".gamefunction").classList.remove("hidden");
-
-            const musicOne = musicArry[0];
-            const musicTwo = musicArry[1];
-
-            document.querySelector('#musicOneImage').setAttribute("src", `${musicOne.thumbnail.url}`)
-            document.querySelector('#musicTwoImage').setAttribute("src", `${musicTwo.thumbnail.url}`)
-
-            document.querySelector('#titleOne').innerHTML = (`${musicOne.title}`)
-            document.querySelector('#titleTwo').innerHTML = (`${musicTwo.title}`)
-
-            var oneAnswer = "";
-            var twoAnswer = "";
-
-            if (musicOne.views > musicTwo.views) {
-                oneAnswer = true;
-                twoAnswer = false;
-            } else if (musicTwo.views > musicOne.views) {
-                oneAnswer = false;
-                twoAnswer = true;
-            } else {
-                oneAnswer = true;
-                twoAnswer = true;
-            }
-            document.querySelector('#higherOne').setAttribute("data-view", `${oneAnswer}`)
-            document.querySelector('#higherTwo').setAttribute("data-view", `${twoAnswer}`)
+            oneAnswer = true;
+            twoAnswer = true;
         }
+        document.querySelector('#higherOne').setAttribute("data-view", `${oneAnswer}`)
+        document.querySelector('#higherTwo').setAttribute("data-view", `${twoAnswer}`)
     }
 }
 
-// with the answer they are showing the result on the page and stop the timer 
-function comparedata(event) {
+function clickevent(event) {
     clearInterval(timeInterval);
     const element = event.target;
     const answerData = element.getAttribute('data-view');
+    comparedata(answerData)
+}
+// with the answer they are showing the result on the page and stop the timer 
+function comparedata(answerData) {
     if (answerData == "true") {
         score++;
         resultEl.textContent = ("right")
@@ -126,6 +123,11 @@ function comparedata(event) {
     if (answerData == "false") {
         wrong++;
         resultEl.textContent = ("wrong");
+    }
+
+    if (answerData == "timeout") {
+        wrong++;
+        resultEl.textContent = ("Timeout");
     }
 
     if (qArry.length != 0) {
@@ -140,7 +142,7 @@ function comparedata(event) {
 async function storescore() {
     document.querySelector(".gamefunction").classList.add("hidden");
     document.querySelector(".gamedone").classList.remove("hidden");
-    document.querySelector("#scoredisplay").innerHTML = (`${score} /${wrong+score}`)
+    document.querySelector("#scoredisplay").innerHTML = (`${score} /${wrong + score}`)
     const response = await fetch('/api/scores/create', {
         method: 'POST',
         body: JSON.stringify({
@@ -198,7 +200,7 @@ function init() {
 
 // giving button a event listener (button that we are clicking "higher")
 for (let i = 0; i < answerButton.length; i++) {
-    answerButton[i].addEventListener('click', comparedata)
+    answerButton[i].addEventListener('click', clickevent)
 }
 
 init();
