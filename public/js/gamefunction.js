@@ -63,43 +63,39 @@ function checkingTwoItems() {
     if (musicArry.length < 2) {
         getRanMusic();
     } else {
-        if (gameover) {
-            // storescore()
-            console.log("false")
+        countDown();
+        loadingPage.style.display = "none"
+        document.querySelector(".gamefunction").classList.remove("hidden");
+        console.log(musicArry)
+        const musicOne = musicArry[0];
+        const musicTwo = musicArry[1];
+        console.log(musicArry[0].thumbnail.url);
+        console.log(musicArry[0].description);
+
+        document.querySelector('#musicOneImage').setAttribute("src", `${musicOne.thumbnail.url}`)
+        document.querySelector('#musicTwoImage').setAttribute("src", `${musicTwo.thumbnail.url}`)
+
+        document.querySelector('#titleOne').innerHTML = (`${musicOne.title}`)
+        document.querySelector('#titleTwo').innerHTML = (`${musicTwo.title}`)
+
+        var oneAnswer = "";
+        var twoAnswer = "";
+
+        if (musicOne.views > musicTwo.views) {
+            oneAnswer = true;
+            twoAnswer = false;
+        } else if (musicTwo.views > musicOne.views) {
+            oneAnswer = false;
+            twoAnswer = true;
         } else {
-            countDown();
-            loadingPage.style.display = "none"
-            document.querySelector(".gamefunction").classList.remove("hidden");
-            console.log(musicArry)
-            const musicOne = musicArry[0];
-            const musicTwo = musicArry[1];
-            console.log(musicArry[0].thumbnail.url);
-            console.log(musicArry[0].description);
-
-            document.querySelector('#musicOneImage').setAttribute("src", `${musicOne.thumbnail.url}`)
-            document.querySelector('#musicTwoImage').setAttribute("src", `${musicTwo.thumbnail.url}`)
-
-            document.querySelector('#titleOne').innerHTML = (`${musicOne.title}`)
-            document.querySelector('#titleTwo').innerHTML = (`${musicTwo.title}`)
-
-            var oneAnswer = "";
-            var twoAnswer = "";
-
-            if (musicOne.views > musicTwo.views) {
-                oneAnswer = true;
-                twoAnswer = false;
-            } else if (musicTwo.views > musicOne.views) {
-                oneAnswer = false;
-                twoAnswer = true;
-            } else {
-                oneAnswer = true;
-                twoAnswer = true;
-            }
-            document.querySelector('#higherOne').setAttribute("data-view", `${oneAnswer}`)
-            document.querySelector('#higherTwo').setAttribute("data-view", `${twoAnswer}`)
+            oneAnswer = true;
+            twoAnswer = true;
         }
+        document.querySelector('#higherOne').setAttribute("data-view", `${oneAnswer}`)
+        document.querySelector('#higherTwo').setAttribute("data-view", `${twoAnswer}`)
     }
 }
+
 
 function clickevent(event) {
     clearInterval(timeInterval);
