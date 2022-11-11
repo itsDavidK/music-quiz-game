@@ -27,7 +27,7 @@ const seed = async ()=> {
             UserId:1
         },
         {
-            userRight: 1,
+            userRight: 240,
             userWrong: 8,
             totalGame: 2,
             UserId:2

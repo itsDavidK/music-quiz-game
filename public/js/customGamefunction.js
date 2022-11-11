@@ -14,6 +14,7 @@ var wrong = 0;
 var gameover = false;
 var timer = 0;
 
+// timer function every time when they come back(next question) it starts from
 function countDown() {
     timer = 15;
     timeInterval = setInterval(function () {
@@ -42,6 +43,7 @@ function getMusic() {
         })
 }
 
+// getting random two number
 function twoNumber() {
     const ranNum = Math.floor(Math.random() * qArry.length);
     console.log(qArry)
@@ -71,6 +73,7 @@ function getViews(musicInfo) {
         .catch(err => console.log(err));
 }
 
+// with the two items in the array screen set up and answer setting 
 function checkingTwoItems() {
     if (musicArry.length < 2) {
         twoNumber();
@@ -110,6 +113,7 @@ function checkingTwoItems() {
     }
 }
 
+// with the answer they are showing the result on the page and stop the timer 
 function comparedata(event) {
     clearInterval(timeInterval);
     const element = event.target;
@@ -132,6 +136,7 @@ function comparedata(event) {
     }
 }
 
+// Post the score to the data base 
 async function storescore() {
     document.querySelector(".gamefunction").classList.add("hidden");
     document.querySelector(".gamedone").classList.remove("hidden");
@@ -174,6 +179,7 @@ async function storescore() {
         })
 }
 
+// looping start we need this on thie custom function because we already have whole set of URL in qArry
 function start() {
     twoNumber();
     document.querySelector(".gamedone").classList.add("hidden");
@@ -190,6 +196,7 @@ function init() {
     getMusic();
 }
 
+// giving button a event listener (button that we are clicking "higher")
 for (let i = 0; i < answerButton.length; i++) {
     answerButton[i].addEventListener('click', comparedata)
 }

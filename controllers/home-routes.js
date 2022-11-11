@@ -108,8 +108,13 @@ router.get('/userpage', async (req, res) => {
 
                 const plainData = userData.get({ plain: true});
                 console.log(plainData) 
+                const level = parseInt(plainData.Profile.userRight/50);
+                const leftover = (plainData.Profile.userRight%50);
+                const percent = (leftover*2)
 
                 return res.render('userpage', {
+                    level,
+                    percent,
                     plainData,
                     loggedIn: req.session.loggedIn,
                     userInfo: req.session.userInfo
@@ -119,6 +124,25 @@ router.get('/userpage', async (req, res) => {
             })
         }
 
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
+
+router.get('/quiz-score', async (req, res) => {
+    try {
+        Score.findAll({
+            where: {
+                QuizId: null
+            }
+        }).then(data =>{
+            console.log(data)
+        })
+        res.render('scoreboard', {
+            loggedIn: req.session.loggedIn,
+            userInfo: req.session.userInfo
+        });
     } catch (err) {
         console.log(err);
         res.status(500).json(err);

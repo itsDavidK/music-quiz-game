@@ -41,49 +41,6 @@
       </nav>
 
   <div class="topleft"><a href="/"><p><span class="badge secondary">&lt;-</span> Take me back home!</p></a></div>
-
-    <div class="row flex-center">
-         <h1>{{userInfo.username}}</h1>
-      </div>
-
-      <div class="row flex-center">
-      <img class="image-bottom" src="/assets/images/user.png"
-      alt="Image of the user's face.">
-    </div> 
-
-    <div class="row flex-center">
-      <h3>Level: {{level}}</h3>
-      <div class="progress margin-bottom">
-        <div class="bar muted w-{{percent}}"></div>
-      </div>
-   </div>
-
-   <div class="row flex-spaces tabs">
-    <input id="tab1" type="radio" name="tabs" checked>
-    <label for="tab1">-Statistics-</label>
-  
-    <input id="tab2" type="radio" name="tabs">
-    <label for="tab2">-Created Quizzes-</label>
-    
-    <div class="content" id="content1">
-      <table>
-        <tbody>
-          <tr>
-            <td>Total Correct Answers:</td>
-            <td>{{plainData.Profile.userRight}}</td>
-          </tr>
-          <tr>
-            <td>Total Wrong Answers:</td>
-            <td>{{plainData.Profile.userWrong}}</td>
-          </tr>
-          <tr>
-            <td>Games Played:</td>
-            <td>{{plainData.Profile.totalGame}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
     <div class="content" id="content2">
       <table class="table-hover">
         <thead>
