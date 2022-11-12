@@ -37,3 +37,10 @@
     visibility: hidden;
     color: rgb(226, 19, 19);
 }
+
+#myUser {
+    position: absolute;
+    top: 240px;
+    font-size: 26px;
+}
+
