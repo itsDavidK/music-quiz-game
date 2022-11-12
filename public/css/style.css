@@ -44,3 +44,10 @@
     font-size: 26px;
 }
 
+#timer {
+    position: absolute;
+    top: 60px;
+    right: 30px;
+    font-size: 26px;
+}
+
