@@ -40,28 +40,45 @@
           </div>
         </div>
       </nav>
+    <h1 class="row flex-center quizName"></h1>
+    <div class="topleft"><a href="/"><p><span class="badge secondary">&lt;-</span> Take me back home!</p></a></div>
 
-  <div class="topleft"><a href="/"><p><span class="badge secondary">&lt;-</span> Take me back home!</p></a></div>
-    <div class="content" id="content2">
-      <table class="table-hover">
+    <table>
         <thead>
           <tr>
-            <th>Quiz ID</th>
-            <th>Name of Quiz</th>
+            <th>#</th>
+            <th>Name</th>
+            <th>Points</th>
           </tr>
         </thead>
-        <tbody>
-          {{#each plainData.Quizzes}}
-          <tr>
-            <td>{{id}}</td>
-            <td>{{quiz_title}}</td>
-            <td><a href="/play-custom/{{id}}"><button class="btn-small btn-success-outline">Play</button></a><button class="btn-small btn-danger-outline" id="delete" data-id="{{id}}">Delete</button></td>
-          </tr>
-          {{/each}}
+
+        <tbody class="liststart" data-id="{{currentQuiz}}">
+          {{!-- <tr>
+            <td>1</td>
+            <td>YourMom</td>
+            <td>420</td>
+          </tr> --}}
         </tbody>
+
       </table>
-    </div>
+
+      <script src="/js/confetti.js"></script>
+      <script>
+        const start = () => {
+          setTimeout(function(){
+            confetti.start();
+          }, 0);
+        };
+
+        const stop = () => {
+          setTimeout(function(){
+            confetti.stop();
+          }, 5000)
+        }
+        start();
+        stop();
+      </script>
 
   </div>
-  <script src="/js/deletequiz.js"></script>
+  <script src="/js/scoreboard.js"></script>
 </body>
