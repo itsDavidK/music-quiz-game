@@ -36,14 +36,16 @@
                   Johnson, Sangmi Yun, David Kovalchuk, and a whole lot of guava.</p>
                 <label for="modal-about">Nice!</label>
               </div>
-            </div> 
+            </div>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <div class="topleft"><a href="/"><p><span class="badge secondary">&lt;-</span> Take me back home!</p></a></div>
+  <div class="topleft"><a href="/">
+      <p><span class="badge secondary">&lt;-</span> Take me back home!</p>
+    </a></div>
 
   <div class="row flex-center">
     <h1>Choose Your Gamemode!</h1>
@@ -62,28 +64,40 @@
         <img class="image-bottom" src="/assets/images/random.jpg" alt="Image of a stickman taking a quiz by himself.">
       </div>
     </div>
+
+    <div class="margin">
+      <div class="card" style="width: 20rem;">
+        <div class="card-body">
+          <h4 class="card-title">Custom Quiz</h4>
+          <h5 class="card-subtitle">How To Play?</h5>
+          <p class="card-text">Choose which song has the most views. The songs are randomly generated!</p>
+          <a href="/gameselect/custom-quiz"><button>Play Now!</button></a>
+        </div>
+        <img class="image-bottom" src="/assets/images/random.jpg" alt="Image of a stickman taking a quiz by himself.">
+      </div>
     </div>
 
-<!-- Custom quizzes go under here -->
+    {{!--
+    <!-- Custom quizzes go under here -->
 
-      <table class="table-hover">
-        <thead>
-          <tr>
-            <th>Quiz ID</th>
-            <th>Name of Quiz</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each plainData.Quizzes}}
-          <tr>
-            <td>{{id}}</td>
-            <td>{{quiz_title}}</td>
-            <td><a href="/play-custom/{{id}}"><button class="btn-small btn-success-outline">Play</button></a></td>
-          </tr>
-          {{/each}}
-        </tbody>
-      </table>
-
+    <table class="table-hover">
+      <thead>
+        <tr>
+          <th>Quiz ID</th>
+          <th>Name of Quiz</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each plainData.Quizzes}}
+        <tr>
+          <td>{{id}}</td>
+          <td>{{quiz_title}}</td>
+          <td><a href="/play-custom/{{id}}"><button class="btn-small btn-success-outline">Play</button></a></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    --}}
 
 
 </body>

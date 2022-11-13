@@ -38,6 +38,7 @@ router.get('/play-alone', async (req, res) => {
         res.status(500).json(err);
     }
 })
+
 router.get('/play-custom/:id', async (req, res) => {
     try {
         const currentQuiz = req.params.id;
@@ -130,46 +131,23 @@ router.get('/userpage', async (req, res) => {
     }
 });
 
-router.get('/quiz-score', async (req, res) => {
-    try {
-        Score.findAll({
-            where: {
-                QuizId: null
-            }
-        }).then(userData => {
-            const scores = userData.map((score) => {
-                score.get({ plain: true })
-            })
-            return res.render('scoreboard', {
-                loggedIn: req.session.loggedIn,
-                userInfo: req.session.userInfo
-            })
-        })
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
-    }
-});
+router.get('/quiz-score', (req, res) => {
+    const currentQuiz = "null";
+    return res.render('scoreboard', {
+        currentQuiz,
+        loggedIn: req.session.loggedIn,
+        userInfo: req.session.userInfo
+    })
+})
 
-router.get('/quiz-score/:id', async (req, res) => {
-    try {
-        Score.findAll({
-            where: {
-                QuizId: req.params.id
-            }
-        }).than(scoreData => {
-            const scores = scoreData.map((score) => {
-                score.get({ plain: true })
-            })
-            return res.render('scoreboard', {
-
-            })
-        });
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
-    }
-});
+router.get('/quiz-score/:id', (req, res) => {
+    const currentQuiz = req.params.id;
+    return res.render('scoreboard', {
+        currentQuiz,
+        loggedIn: req.session.loggedIn,
+        userInfo: req.session.userInfo
+    })
+})
 
 router.get('/gameselect', async (req, res) => {
     try {
@@ -183,4 +161,11 @@ router.get('/gameselect', async (req, res) => {
     }
 });
 
+
+router.get('/gameselect/custom-quiz', (req, res) => {
+    res.render('customList', {
+        loggedIn: req.session.loggedIn,
+        userInfo: req.session.userInfo
+    })
+})
 module.exports = router;
