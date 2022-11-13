@@ -150,4 +150,17 @@ router.get('/quiz-score/:id', (req, res) => {
         userInfo: req.session.userInfo
     })
 })
+
+router.get('/gameselect', async (req, res) => {
+    try {
+        res.render('gameselect', {
+            loggedIn: req.session.loggedIn,
+            userInfo: req.session.userInfo
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
+
 module.exports = router;

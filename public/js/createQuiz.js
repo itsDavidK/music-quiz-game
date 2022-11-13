@@ -6,6 +6,7 @@ const createButton = document.getElementById("create-quiz");
 const badgeDone = document.getElementById('quizNameBadge');
 const youDiv = document.getElementById('youtubeInput');
 const nameDiv = document.getElementById('nameDiv');
+const failure = document.querySelector('#failure');
 let quizId
 let questionURL
 let arryURL = [];
@@ -72,10 +73,10 @@ async function questionSubmitHandler(event) {
 
 function submitquizHandler() {
     if(arryURL.length%2 === 1) {
-        document.querySelector(".evennumber").innerHTML= ("We need even number of URL to create your Quiz")
+        document.querySelector(".failed").innerHTML= ("We need an even number of URLs to create your Quiz")
+        failure.style.visibility = "visible";
         return;
     } else {
-        document.querySelector(".evennumber").innerHTML= ("Saved!")
         document.location.replace('/');
     }
 }
