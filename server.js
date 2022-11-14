@@ -14,13 +14,14 @@ const server = http.createServer(app)
 const io = require('socket.io')(server)
 app.set('socketio', io)
 const players = []
+const playerSockets = []
 
 var varThatTellsArrayToPushOnOne = 1
 
 
 io.on('connection', function (socket) {
-
-
+  console.log('connected')
+  playerSockets.push(socket)
 
   socket.on('player-name', name => {
     console.log('hello')
@@ -45,12 +46,19 @@ io.on('connection', function (socket) {
   })
 
   socket.on('send-vids', data => {
+
     console.log(data)
     socket.broadcast.emit('receive-vids', data)
   })
 
+
   //Whenever someone disconnects this piece of code executed
   socket.on('disconnect', function () {
+    var i = playerSockets.indexOf(socket)
+
+    playerSockets.splice(i, 1)
+    players.splice(i, 1)
+    socket.emit('player-list', players)
     console.log('A user disconnected');
   });
 });
