@@ -1,0 +1,84 @@
+<body class="paper">
+  <nav class="border fixed split-nav">
+    <div class="nav-brand">
+      {{#if loggedIn}}
+      <h3>Welcome {{userInfo.username}}! </h3>
+      {{else}}
+      <h3>Welcome Guest!</h3>
+      {{/if}}
+    </div>
+    <div class="collapsible">
+      <input id="collapsible1" type="checkbox" name="collapsible1">
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+      <div class="collapsible-body">
+        <ul class="inline">
+
+          {{#if loggedIn}}
+          <button id="logout" class="btn-no-style">Logout</button>
+          <a href="/userpage"><button>Profile</button></a>
+          {{else}}
+          <li><a href="/users/signup">Sign Up</a></li>
+          <li><a href="/users/login">Login</a></li>
+          {{/if}}
+                <label class="paper-btn"for="modal-about">About</label>
+                <input class="modal-state" id="modal-about" type="checkbox">
+                <div class="modal">
+                <label class="modal-bg" for="modal-about"></label>
+             <div class="modal-body">
+             <h4 class="modal-title">What is This?</h4>
+            <p class="modal-text">Music Quiz was a project created by Jordan
+                  Johnson, Sangmi Yun, David Kovalchuk, and a whole lot of guava.</p>
+          <label for="modal-about">Nice!</label>
+             </div>
+          </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <h1 class="row flex-center quizName"></h1>
+    <div class="topleft"><a href="/"><p><span class="badge secondary">&lt;-</span> Take me back home!</p></a></div>
+
+    <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+
+        <tbody class="liststart" data-id="{{currentQuiz}}">
+          {{!-- <tr>
+            <td>1</td>
+            <td>YourMom</td>
+            <td>420</td>
+          </tr> --}}
+        </tbody>
+
+      </table>
+
+      <script src="/js/confetti.js"></script>
+      <script>
+        const start = () => {
+          setTimeout(function(){
+            confetti.start();
+          }, 0);
+        };
+
+        const stop = () => {
+          setTimeout(function(){
+            confetti.stop();
+          }, 5000)
+        }
+        start();
+        stop();
+      </script>
+
+  </div>
+  <script src="/js/scoreboard.js"></script>
+</body>

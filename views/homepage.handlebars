@@ -1,0 +1,97 @@
+<body class="paper">
+  <nav class="border fixed split-nav">
+    <div class="nav-brand">
+      {{#if loggedIn}}
+      <h3>Welcome {{userInfo.username}}! </h3>
+      {{else}}
+      <h3>Welcome Guest!</h3>
+      {{/if}}
+    </div>
+    <div class="collapsible">
+      <input id="collapsible1" type="checkbox" name="collapsible1">
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+      <div class="collapsible-body">
+        <ul class="inline">
+
+          {{#if loggedIn}}
+          <button id="logout" class="btn-no-style">Logout</button>
+          <a href="/userpage"><button>Profile</button></a>
+          {{else}}
+          <li><a href="/users/signup">Sign Up</a></li>
+          <li><a href="/users/login">Login</a></li>
+          {{/if}}
+
+          <li>
+            <label class="paper-btn" for="modal-about">About</label>
+            <input class="modal-state" id="modal-about" type="checkbox">
+            <div class="modal">
+              <label class="modal-bg" for="modal-about"></label>
+              <div class="modal-body">
+                <h4 class="modal-title">What is This?</h4>
+                <p class="modal-text">Music Quiz was a project created by Jordan
+                  Johnson, Sangmi Yun, David Kovalchuk, and a whole lot of guava.</p>
+                <label for="modal-about">Nice!</label>
+              </div>
+            </div> 
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="row flex-center">
+    <h1>Music Quiz</h1>
+  </div>
+
+  <div class="row flex-center">
+
+    <div class="margin">
+      <div class="card" style="width: 20rem;">
+        <div class="card-body">
+          <h4 class="card-title">Play Alone!</h4>
+          <h5 class="card-subtitle">How To Play?</h5>
+          <p class="card-text">Select which song you think has the most views on YouTube.</p>
+          <a href="/gameselect"><button>Play Now!</button></a>
+        </div>
+        <img class="image-bottom" src="/assets/images/alone.jpg" alt="Image of a stickman taking a quiz by himself.">
+      </div>
+    </div>
+
+    <div class="margin">
+      <div class="card" style="width: 20rem;">
+        <div class="card-body">
+          <h4 class="card-title">Play with Friends!</h4>
+          <h5 class="card-subtitle">How To Play?</h5>
+          <p class="card-text">Compete with friends in the original gamemode to determine who is the best.</p>
+          <a href="/lobby"><button>Play Now!</button></a>
+        </div>
+        <img class="image-bottom" src="/assets/images/withFriends.jpg"
+          alt="Image of two stickmen facing each other in a game.">
+      </div>
+    </div>
+
+    <div class="margin">
+      <div class="card" style="width: 20rem;">
+        <div class="card-body">
+          <h4 class="card-title">Make a Quiz!</h4>
+          <h5 class="card-subtitle">Say What?</h5>
+          {{#if loggedIn}}
+          <p class="card-text">Create a quiz to test your friends whether they know as much as you!</p>
+          <a href="/create-quiz"><button>Create Now!</button></a>
+          {{else}}
+          <p class="card-text">Login into your account and create your custom quiz!</p>
+          <button type="button" disabled>Create Now!</button>
+          {{/if}}
+        </div>
+        <img class="image-bottom" src="/assets/images/makeQuiz.jpg" alt="Image of a lightbulb lighting up.">
+      </div>
+    </div>
+
+  </div>
+
+
+</body>

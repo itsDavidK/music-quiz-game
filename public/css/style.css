@@ -1,0 +1,51 @@
+.hidden {
+    display: none;
+}
+
+
+.topleft {
+    position: absolute;
+    left: 30px;
+    top: 60px;
+    font-size: 25px;
+}
+
+.ele1 {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: gainsboro;
+}
+
+#loadingBody {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.loadingText {
+    position: absolute;
+    top: 390px;
+    font-size: 32px;
+}
+
+.failed {
+    visibility: hidden;
+    color: rgb(226, 19, 19);
+}
+
+#myUser {
+    position: absolute;
+    top: 240px;
+    font-size: 26px;
+}
+
+#timer {
+    position: absolute;
+    top: 60px;
+    right: 30px;
+    font-size: 26px;
+}

@@ -1,0 +1,18 @@
+<body class="row paper margin-top sm-12 md-6 lg-6 col">
+  <div class="topleft"><a href="/">
+      <p><span class="badge secondary">&lt;-</span> Take me Home!</p>
+    </a></div>
+    
+  <div class="row flex-center login-form"style="width: 20rem;">
+    <h1 class="">Quiz Maker</h1>
+
+    {{>quiz-name}}
+    {{>youtube-url}}
+
+<!-- Red text when user fails to make quiz requirements. -->
+    <p class="failed" id="failure"></p>
+    <buttion><input id="create-quiz" type="button" class="hidden btn-success-outline col-12 col form-group"
+        value="Create Quiz!"/></buttion>
+  </div>
+  <script src="/js/createQuiz.js"></script>
+</body>
