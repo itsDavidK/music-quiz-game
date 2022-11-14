@@ -33,7 +33,7 @@
                             <div class="modal-body">
                                 <h4 class="modal-title">What is This?</h4>
                                 <p class="modal-text">Music Quiz was a project created by Jordan
-                  Johnson, Sangmi Yun, David Kovalchuk, and a whole lot of guava.</p>
+                                    Johnson, Sangmi Yun, David Kovalchuk, and a whole lot of guava.</p>
                                 <label for="modal-about">Nice!</label>
                             </div>
                         </div>
@@ -45,7 +45,11 @@
     <div id="lobbyDiv">
 
         <div id="usersDiv" class="row flex-center">
-            <h1>Users:<hr></h1>
+            <h1>Users:
+                <hr>
+            </h1>
+
+            <p id="myUser"> {{userInfo.username}}</p>
         </div>
 
         <div>
@@ -112,9 +116,9 @@
             <div class="topleft"><a href="/">
                     <p><span class="badge secondary">&lt;-</span> Take me Home!</p>
                 </a>
-                <p id="timer"></p>
-            </div>
 
+            </div>
+            <p id="timer"></p>
             <div class="row flex-center">
                 <h1>Which Has More Views?</h1>
             </div>
@@ -157,6 +161,7 @@
             </div>
         </section>
     </div>
+
     <script src="/js/friendGame.js"></script>
 
 </body>

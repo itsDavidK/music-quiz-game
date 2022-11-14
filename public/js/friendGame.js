@@ -34,7 +34,7 @@ let custStart = 0
 
 // timer for the game each question has 15 sec
 function countDown() {
-    timer = 15;
+    timer = 10;
     timerEl.textContent = timer + " seconds remaining";
     timeInterval = setInterval(function () {
         timer--;
@@ -68,6 +68,9 @@ socket.on('start-game-user', () => {
     document.querySelector(".gamedone").classList.add("hidden"); ``
     goToGame()
 })
+
+
+
 start.addEventListener('click', () => {
     goToGame()
     role = 'host'
@@ -227,14 +230,21 @@ function comparedata() {
             init();
         }
     } else {
-        storescore();
+
+        if (role === 'host' || gameType === 'rand') {
+            storescore();
+
+        }
+
     }
 }
+
 
 async function storescore() {
     document.querySelector(".gamefunction").classList.add("hidden");
     document.querySelector(".gamedone").classList.remove("hidden");
     document.querySelector("#scoredisplay").innerHTML = (`score: ${score}`)
+    loadingPage.style.display = 'none'
     const response = await fetch('/api/scores/create', {
         method: 'POST',
         body: JSON.stringify({
