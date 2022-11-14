@@ -163,4 +163,23 @@ router.get('/gameselect', async (req, res) => {
     }
 });
 
+router.get('/play-alone/custom-game', async (req, res) => {
+    try {
+        const dbQuizData = await Quiz.findAll();
+
+        const quizzes = dbQuizData.map((quiz) =>
+            quiz.get({ plain: true })
+        );
+        console.log(quizzes)
+        res.render('customselect', {
+            quizzes,
+            loggedIn: req.session.loggedIn,
+            userInfo: req.session.userInfo
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
+
 module.exports = router;
