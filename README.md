@@ -75,5 +75,8 @@ The APIs that we used are:
 - [Kareoke] (https://rapidapi.com/lbarcl/api/kareoke/)
 - [Simple YouTube Search] (https://rapidapi.com/Snowflake107/api/simple-youtube-search/details)
 
+## Deployed Application
+https://musicguava.herokuapp.com/
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
