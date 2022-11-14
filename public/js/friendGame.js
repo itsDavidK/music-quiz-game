@@ -82,8 +82,10 @@ for (let i = 0; i < customs.length; i++) {
     customs[i].addEventListener('click', () => {
         role = 'host'
         socket.emit('start-game-host', role)
-        console.log(this)
-        quizNum = i + 1
+
+        const dataEl = document.querySelector('#data-Id')
+        const databaseId = dataEl.getAttribute('data-id')
+        quizNum = databaseId
         gameType = 'custom'
         goToGame()
         init()
