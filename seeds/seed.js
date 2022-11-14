@@ -1,42 +1,42 @@
 const sequelize = require("../config/connection");
 const { Question, Quiz, Score, User, Profile } = require("../models");
 
-const seed = async ()=> {
-    await sequelize.sync({force:true});
+const seed = async () => {
+    await sequelize.sync({ force: true });
     const users = await User.bulkCreate([
         {
-            username:"Kate",
-            password:"password"
+            username: "Kate",
+            password: "password"
         },
         {
-            username:"Dave90",
-            password:"password1"
+            username: "Dave90",
+            password: "password1"
         },
         {
-            username:"BootCamp2022",
-            password:"password1!"
+            username: "BootCamp2022",
+            password: "password1!"
         }
-    ],{
-        individualHooks:true
+    ], {
+        individualHooks: true
     })
     const profile = await Profile.bulkCreate([
         {
             userRight: 18,
             userWrong: 12,
             totalGame: 3,
-            UserId:1
+            UserId: 1
         },
         {
             userRight: 240,
             userWrong: 8,
             totalGame: 2,
-            UserId:2
+            UserId: 2
         },
         {
             userRight: 14,
             userWrong: 19,
             totalGame: 3,
-            UserId:3
+            UserId: 3
         },
     ])
     const quiz = await Quiz.bulkCreate([
