@@ -47,19 +47,67 @@
         <div id="usersDiv" class="row flex-center">
             <h1>Users:<hr></h1>
         </div>
-    <ul class="inline" id="myUser">
-        <li>{{userInfo.username}}</li>
-    </ul>
 
-    <ul class="inline" id="testing">
+        <div>
+            <h4>Custom?</h4>
+            <table class="table-hover">
+                <thead>
+                    <tr>
+                        <th>Quiz ID</th>
+                        <th>Name of Quiz</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each plainData.Quizzes}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{quiz_title}}</td>
+                        <td><button alt="{{id}}" id="{{id}}"
+                                class="btn-small btn-success-outline custom-quiz-button">Start This
+                                Quiz</button> </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <div id="startGame" class="row flex-center"><button>Start Random Game</button></div>
 
-    </ul>
-        <hr>
-
-        <div id="startGame" class="row flex-center"><button>start game</button></div>
 
     </div>
     <div id="game" class="hidden">
+        <section id="loadingBody">
+            <div class="loadingText">
+                <p class="resultQuiz">Generating your Quiz!</p>
+            </div>
+
+
+            <div class="loader">
+
+                <div class="ele1"></div>
+                <div class="ele1"></div>
+                <div class="ele1"></div>
+
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+            <script>
+
+                anime({
+                    targets: '.loader .ele1',
+                    loop: true,
+                    scale: [
+                        { value: '.1', duration: 1200, easing: 'easeOutSine' },
+                        { value: '1', duration: 1200, easing: 'easeInQuad' },
+                    ],
+                    translateY: [
+                        { value: '-45', duration: 1200, easing: 'easeOutSine' },
+                        { value: '0', duration: 1200, easing: 'easeInQuad' },
+                    ],
+                    delay: anime.stagger(300)
+                });
+
+            </script>
+
+        </section>
         <section class="gamefunction">
             <div class="topleft"><a href="/">
                     <p><span class="badge secondary">&lt;-</span> Take me Home!</p>

@@ -13,17 +13,8 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/lobby', async (req, res) => {
-    try {
-        res.render('lobby', {
-            loggedIn: req.session.loggedIn,
-            userInfo: req.session.userInfo
-        });
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
-    }
-});
+
+
 
 router.get('/play-alone', async (req, res) => {
     try {
@@ -133,6 +124,31 @@ router.get('/userpage', async (req, res) => {
     }
 });
 
+
+router.get('/lobby', async (req, res) => {
+
+
+    try {
+
+        User.findOne({
+            include: [Profile, Quiz],
+            where: {
+                id: req.session.userInfo.id
+            }
+        }).then(data => {
+            const plainData = data.get({ plain: true });
+            return res.render('lobby', {
+                plainData,
+                loggedIn: req.session.loggedIn,
+                userInfo: req.session.userInfo
+            });
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
+
 router.get('/quiz-score', (req, res) => {
     const currentQuiz = "null";
     return res.render('scoreboard', {
@@ -173,6 +189,7 @@ router.get('/play-alone/custom-game', async (req, res) => {
         console.log(quizzes)
         res.render('customselect', {
             quizzes,
+
             loggedIn: req.session.loggedIn,
             userInfo: req.session.userInfo
         });

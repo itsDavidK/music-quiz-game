@@ -10,40 +10,46 @@ let role = 'user'
 let playerNum = 0
 let currentPlayer = 'user'
 
+let answerData
+
+const customs = document.getElementsByClassName('custom-quiz-button')
 
 
-
+const timerEl = document.querySelector("#timer");
 const musicCardOne = document.querySelector("#music-card-one");
 const musicCardTwo = document.querySelector("#music-card-two");
-const loadingPage = document.querySelector("#loadingBody");
-const timerEl = document.querySelector("#timer");
-const resultEl = document.querySelector(".resultQuiz");
 var answerButton = document.getElementsByClassName("btn-block");
+const loadingPage = document.querySelector("#loadingBody");
+const resultEl = document.querySelector(".resultQuiz");
+let quizNum
+let qArry = []
 var musicArry = [];
 var score = 0;
 var questionNum = 0;
 var wrong = 0;
 var gameover = false;
 var timer = 0;
+let gameType = 'rand'
+let custStart = 0
 
-
+// timer for the game each question has 15 sec
 function countDown() {
     timer = 15;
+    timerEl.textContent = timer + " seconds remaining";
     timeInterval = setInterval(function () {
         timer--;
         timerEl.textContent = timer + " seconds remaining";
+
+
         // if the time left 0 stop the counter and display the message
         if (timer === 0) {
             clearInterval(timeInterval);
-            timer = 15
-
-
-            init()
-
+            comparedata()
         }
         //setting the speed of counter
     }, 1000);
 }
+
 
 
 socket.emit('player-name', myUser.textContent)
@@ -58,6 +64,8 @@ function playerConnectedOrDisconnected(players) {
 }
 socket.emit('sendName', myUser.textContent)
 socket.on('start-game-user', () => {
+    document.querySelector(".gamefunction").classList.add("hidden");
+    document.querySelector(".gamedone").classList.add("hidden"); ``
     goToGame()
 })
 start.addEventListener('click', () => {
@@ -67,14 +75,47 @@ start.addEventListener('click', () => {
     init();
 })
 
+for (let i = 0; i < customs.length; i++) {
+    customs[i].addEventListener('click', () => {
+        role = 'host'
+        socket.emit('start-game-host', role)
+        console.log(this)
+        quizNum = i + 1
+        gameType = 'custom'
+        goToGame()
+        init()
+    })
+}
+
+
+
 function goToGame() {
     names.classList.add('hidden')
     game.classList.remove('hidden')
 }
 
+function getMusic() {
+    fetch(`/api/quiz/${quizNum}`)
+        .then(response => {
+            return response.json();
+        }).then(data => {
+            for (let i = 0; i < data.Questions.length; i++) {
+                qArry.push(data.Questions[i].URL);
+            }
+            console.log('qArry')
+            console.log(qArry)
+            twoNumber();
+        }).catch(err => console.error(err))
+}
+
+function twoNumber() {
+    const ranNum = Math.floor(Math.random() * qArry.length);
+
+    getViews(qArry[ranNum])
+    qArry.splice(ranNum, 1)
 
 
-
+}
 
 //get random music
 function getRanMusic() {
@@ -102,6 +143,7 @@ function getViews(musicInfo) {
     fetch('https://simple-youtube-search.p.rapidapi.com/video?search=' + musicInfo, options)
         .then(response => response.json())
         .then(response => {
+
             musicArry.push(response.result);
 
             checkingTwoItems();
@@ -109,19 +151,24 @@ function getViews(musicInfo) {
         .catch(err => console.log(err));
 }
 
+
 function checkingTwoItems() {
-    if (musicArry.length < 2) {
+    if (musicArry.length < 2 && gameType == 'rand') {
         getRanMusic();
+    }
+    if (musicArry.length < 2 && gameType == 'custom') {
+        twoNumber()
     } else {
         if (role === 'host') {
             socket.emit('send-vids', musicArry)
         }
         countDown();
-        console.log(musicArry)
+        loadingPage.style.display = "none"
+        document.querySelector(".gamefunction").classList.remove("hidden");
+
         const musicOne = musicArry[0];
         const musicTwo = musicArry[1];
-        console.log(musicArry[0].thumbnail.url);
-        console.log(musicArry[0].description);
+
 
         document.querySelector('#musicOneImage').setAttribute("src", `${musicOne.thumbnail.url}`)
         document.querySelector('#musicTwoImage').setAttribute("src", `${musicTwo.thumbnail.url}`)
@@ -147,20 +194,34 @@ function checkingTwoItems() {
     }
 }
 
-function comparedata(event) {
+function clickevent(event) {
     const element = event.target;
-    const answerData = element.getAttribute('data-view');
+    answerData = element.getAttribute('data-view');
+}
+
+function comparedata() {
+
     if (answerData == "true") {
         score++;
-        console.log("right")
+        resultEl.textContent = ("right");
     }
 
     if (answerData == "false") {
         wrong++;
-        console.log("worng");
+        resultEl.textContent = ("wrong");
     }
+    questionNum++;
+    if (gameType == 'rand' && questionNum < 10) {
+        loadingPage.style.display = "flex"
+        document.querySelector(".gamefunction").classList.add("hidden");
+        if (role === "host") {
 
-    if (questionNum < 10) {
+            init();
+        }
+    }
+    if (gameType == 'custom' && qArry.length != 0) {
+        loadingPage.style.display = "flex"
+        document.querySelector(".gamefunction").classList.add("hidden");
         if (role === "host") {
 
             init();
@@ -173,7 +234,7 @@ function comparedata(event) {
 async function storescore() {
     document.querySelector(".gamefunction").classList.add("hidden");
     document.querySelector(".gamedone").classList.remove("hidden");
-    document.querySelector("#scoredisplay").innerHTML = (`${score} /10`)
+    document.querySelector("#scoredisplay").innerHTML = (`score: ${score}`)
     const response = await fetch('/api/scores/create', {
         method: 'POST',
         body: JSON.stringify({
@@ -183,47 +244,67 @@ async function storescore() {
         headers: { 'Content-Type': 'application/json' },
     });
 
-    await fetch('/api/users/current-user')
+    await fetch('/api/profile/current-user')
         .then(response => {
             return response.json();
         }).then(data => {
-            console.log(data)
-            const upRight = score + data.profile.userRight
-            const upWrong = wrong + data.profile.userWrong
-            const uptotal = data.profile.totalGame + 1;
+            const upRight = score + data.userRight;
+            const upWrong = wrong + data.userWrong;
+            const uptotal = data.totalGame + 1;
+            const userid = data.UserId;
             fetch('/api/profile/update', {
                 method: 'PUT',
                 body: JSON.stringify({
-                    username: data.username,
+                    id: data.id,
                     userRight: upRight,
                     userWrong: upWrong,
-                    totalGame: uptotal
+                    totalGame: uptotal,
+                    UserId: userid,
                 }),
                 headers: { 'Content-Type': 'application/json' },
             })
+        }).catch(err => {
+            return;
         })
 }
 
 // inital start
 function init() {
     document.querySelector(".gamedone").classList.add("hidden");
+    document.querySelector(".gamefunction").classList.add("hidden");
     musicArry = [];
-    questionNum++;
+
     document.querySelector("#score").textContent = `score: ${score}`;
-    getRanMusic();
+    if (gameType === 'rand') {
+        console.log(gameType)
+        getRanMusic();
+
+    }
+    if (gameType === 'custom') {
+        console.log(gameType)
+        if (custStart == 0) {
+            custStart = 1
+            getMusic()
+
+        } else {
+            twoNumber()
+
+        }
+    }
 }
 
 socket.on('receive-vids', data => {
     document.querySelector(".gamedone").classList.add("hidden");
+    document.querySelector(".gamefunction").classList.add("hidden");
     document.querySelector("#score").textContent = `score: ${score}`;
-    console.log(data)
     musicArry = data;
     checkingTwoItems()
+
 })
 
 
 for (let i = 0; i < answerButton.length; i++) {
-    answerButton[i].addEventListener('click', comparedata)
+    answerButton[i].addEventListener('click', clickevent)
 }
 
 
