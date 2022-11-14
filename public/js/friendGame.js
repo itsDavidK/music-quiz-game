@@ -12,12 +12,17 @@ let currentPlayer = 'user'
 
 let answerData
 
+const customs = document.getElementsByClassName('custom-quiz-button')
+
+
 const timerEl = document.querySelector("#timer");
 const musicCardOne = document.querySelector("#music-card-one");
 const musicCardTwo = document.querySelector("#music-card-two");
 var answerButton = document.getElementsByClassName("btn-block");
 const loadingPage = document.querySelector("#loadingBody");
 const resultEl = document.querySelector(".resultQuiz");
+let quizNum
+let qArry = []
 var musicArry = [];
 var score = 0;
 var questionNum = 0;
@@ -25,13 +30,17 @@ var wrong = 0;
 var gameover = false;
 var timer = 0;
 let gameType = 'rand'
+let custStart = 0
 
 // timer for the game each question has 15 sec
 function countDown() {
     timer = 15;
+    timerEl.textContent = timer + " seconds remaining";
     timeInterval = setInterval(function () {
         timer--;
         timerEl.textContent = timer + " seconds remaining";
+
+
         // if the time left 0 stop the counter and display the message
         if (timer === 0) {
             clearInterval(timeInterval);
@@ -66,6 +75,20 @@ start.addEventListener('click', () => {
     init();
 })
 
+for (let i = 0; i < customs.length; i++) {
+    customs[i].addEventListener('click', () => {
+        role = 'host'
+        socket.emit('start-game-host', role)
+        console.log(this)
+        quizNum = i + 1
+        gameType = 'custom'
+        goToGame()
+        init()
+    })
+}
+
+
+
 function goToGame() {
     names.classList.add('hidden')
     game.classList.remove('hidden')
@@ -79,11 +102,20 @@ function getMusic() {
             for (let i = 0; i < data.Questions.length; i++) {
                 qArry.push(data.Questions[i].URL);
             }
+            console.log('qArry')
+            console.log(qArry)
             twoNumber();
-        })
+        }).catch(err => console.error(err))
 }
 
+function twoNumber() {
+    const ranNum = Math.floor(Math.random() * qArry.length);
 
+    getViews(qArry[ranNum])
+    qArry.splice(ranNum, 1)
+
+
+}
 
 //get random music
 function getRanMusic() {
@@ -111,6 +143,7 @@ function getViews(musicInfo) {
     fetch('https://simple-youtube-search.p.rapidapi.com/video?search=' + musicInfo, options)
         .then(response => response.json())
         .then(response => {
+
             musicArry.push(response.result);
 
             checkingTwoItems();
@@ -120,8 +153,11 @@ function getViews(musicInfo) {
 
 
 function checkingTwoItems() {
-    if (musicArry.length < 2) {
+    if (musicArry.length < 2 && gameType == 'rand') {
         getRanMusic();
+    }
+    if (musicArry.length < 2 && gameType == 'custom') {
+        twoNumber()
     } else {
         if (role === 'host') {
             socket.emit('send-vids', musicArry)
@@ -129,11 +165,10 @@ function checkingTwoItems() {
         countDown();
         loadingPage.style.display = "none"
         document.querySelector(".gamefunction").classList.remove("hidden");
-        console.log(musicArry)
+
         const musicOne = musicArry[0];
         const musicTwo = musicArry[1];
-        console.log(musicArry[0].thumbnail.url);
-        console.log(musicArry[0].description);
+
 
         document.querySelector('#musicOneImage').setAttribute("src", `${musicOne.thumbnail.url}`)
         document.querySelector('#musicTwoImage').setAttribute("src", `${musicTwo.thumbnail.url}`)
@@ -176,7 +211,15 @@ function comparedata() {
         resultEl.textContent = ("wrong");
     }
     questionNum++;
-    if (questionNum < 10) {
+    if (gameType == 'rand' && questionNum < 10) {
+        loadingPage.style.display = "flex"
+        document.querySelector(".gamefunction").classList.add("hidden");
+        if (role === "host") {
+
+            init();
+        }
+    }
+    if (gameType == 'custom' && qArry.length != 0) {
         loadingPage.style.display = "flex"
         document.querySelector(".gamefunction").classList.add("hidden");
         if (role === "host") {
@@ -191,7 +234,7 @@ function comparedata() {
 async function storescore() {
     document.querySelector(".gamefunction").classList.add("hidden");
     document.querySelector(".gamedone").classList.remove("hidden");
-    document.querySelector("#scoredisplay").innerHTML = (`${score} /10`)
+    document.querySelector("#scoredisplay").innerHTML = (`score: ${score}`)
     const response = await fetch('/api/scores/create', {
         method: 'POST',
         body: JSON.stringify({
@@ -233,11 +276,20 @@ function init() {
 
     document.querySelector("#score").textContent = `score: ${score}`;
     if (gameType === 'rand') {
+        console.log(gameType)
         getRanMusic();
 
     }
     if (gameType === 'custom') {
-        getMusic()
+        console.log(gameType)
+        if (custStart == 0) {
+            custStart = 1
+            getMusic()
+
+        } else {
+            twoNumber()
+
+        }
     }
 }
 
