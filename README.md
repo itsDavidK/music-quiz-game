@@ -70,7 +70,7 @@ uuid
 
 
 ## App Screenshot 
-<img src="./public/assets/images/2022-11-14 14-11-47.gif"
+<img src="./public/assets/images/2022-11-14 14-11-47.gif">
 
 ## Credits
 This project was created by Jordan Johnson, Sangmi Yun, and David Kovalchuk.
