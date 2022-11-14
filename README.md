@@ -66,9 +66,9 @@ socket.io
 uuid
 ```
 
-##Usage
+## Usage
 
-##Credits
+## Credits
 This project was created by Jordan Johnson, Sangmi Yun, and David Kovalchuk.
 
 The APIs that we used are:
