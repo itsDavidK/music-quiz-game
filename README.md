@@ -70,9 +70,7 @@ uuid
 
 
 ## App Screenshot 
-![Alt text](../../../../../../C:/Users/MIA/bootcamp/project/music-quiz-game/public/assets/images/screenshot.png)
-
-![Alt text](../../../../../../C:/Users/MIA/bootcamp/project/music-quiz-game/public/assets/images/2022-11-14%2014-11-47.gif)
+<img src="./public/assets/images/2022-11-14 14-11-47.gif"
 
 ## Credits
 This project was created by Jordan Johnson, Sangmi Yun, and David Kovalchuk.
