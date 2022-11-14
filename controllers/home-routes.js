@@ -15,6 +15,7 @@ router.get('/', async (req, res) => {
 
 
 
+
 router.get('/play-alone', async (req, res) => {
     try {
         res.render('quiz', {
@@ -40,7 +41,6 @@ router.get('/play-custom/:id', async (req, res) => {
     }
 })
 
-
 router.get('/play-friends', async (req, res) => {
 
     try {
@@ -57,10 +57,16 @@ router.get('/play-friends', async (req, res) => {
 router.get('/create-quiz', async (req, res) => {
     try {
         if (!req.session.loggedIn) {
-            return res.redirect("/users/login")
+            return res.redirect("/users/login", {
+                loggedIn: req.session.loggedIn,
+                userInfo: req.session.userInfo
+            })
         }
         if (req.session.loggedIn) {
-            return res.render('create')
+            return res.render('create', {
+                loggedIn: req.session.loggedIn,
+                userInfo: req.session.userInfo
+            })
         }
     } catch (err) {
         console.log(err);
@@ -118,6 +124,7 @@ router.get('/userpage', async (req, res) => {
     }
 });
 
+
 router.get('/lobby', async (req, res) => {
 
 
@@ -142,17 +149,47 @@ router.get('/lobby', async (req, res) => {
     }
 });
 
+router.get('/quiz-score', (req, res) => {
+    const currentQuiz = "null";
+    return res.render('scoreboard', {
+        currentQuiz,
+        loggedIn: req.session.loggedIn,
+        userInfo: req.session.userInfo
+    })
+})
 
-router.get('/quiz-score', async (req, res) => {
+router.get('/quiz-score/:id', (req, res) => {
+    const currentQuiz = req.params.id;
+    return res.render('scoreboard', {
+        currentQuiz,
+        loggedIn: req.session.loggedIn,
+        userInfo: req.session.userInfo
+    })
+})
+
+router.get('/gameselect', async (req, res) => {
     try {
-        Score.findAll({
-            where: {
-                QuizId: null
-            }
-        }).then(data => {
-            console.log(data)
-        })
-        res.render('scoreboard', {
+        res.render('gameselect', {
+            loggedIn: req.session.loggedIn,
+            userInfo: req.session.userInfo
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
+
+router.get('/play-alone/custom-game', async (req, res) => {
+    try {
+        const dbQuizData = await Quiz.findAll();
+
+        const quizzes = dbQuizData.map((quiz) =>
+            quiz.get({ plain: true })
+        );
+        console.log(quizzes)
+        res.render('customselect', {
+            quizzes,
+
             loggedIn: req.session.loggedIn,
             userInfo: req.session.userInfo
         });

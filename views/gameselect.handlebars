@@ -43,8 +43,10 @@
     </div>
   </nav>
 
+  <div class="topleft"><a href="/"><p><span class="badge secondary">&lt;-</span> Take me back home!</p></a></div>
+
   <div class="row flex-center">
-    <h1>Music Quiz</h1>
+    <h1>Choose Your Gamemode!</h1>
   </div>
 
   <div class="row flex-center">
@@ -52,46 +54,25 @@
     <div class="margin">
       <div class="card" style="width: 20rem;">
         <div class="card-body">
-          <h4 class="card-title">Play Alone!</h4>
+          <h4 class="card-title">Random Quiz</h4>
           <h5 class="card-subtitle">How To Play?</h5>
-          <p class="card-text">Select which song you think has the most views on YouTube.</p>
-          <a href="/gameselect"><button>Play Now!</button></a>
+          <p class="card-text">Choose which song has the most views. The songs are randomly generated!</p>
+          <a href="/play-alone"><button>Play Now!</button></a>
         </div>
-        <img class="image-bottom" src="/assets/images/alone.jpg" alt="Image of a stickman taking a quiz by himself.">
+        <img class="image-bottom" src="/assets/images/random.jpg" alt="Image of a stickman taking a quiz by himself.">
       </div>
     </div>
-
+    <!-- Custom quizzes go under here -->
     <div class="margin">
       <div class="card" style="width: 20rem;">
         <div class="card-body">
-          <h4 class="card-title">Play with Friends!</h4>
+          <h4 class="card-title">Custom Quiz</h4>
           <h5 class="card-subtitle">How To Play?</h5>
-          <p class="card-text">Compete with friends in the original gamemode to determine who is the best.</p>
-          <a href="/lobby"><button>Play Now!</button></a>
+          <p class="card-text">Choose which song has the most views. The songs are randomly generated!</p>
+          <a href="/play-alone/custom-game"><button>Play Now!</button></a>
         </div>
-        <img class="image-bottom" src="/assets/images/withFriends.jpg"
-          alt="Image of two stickmen facing each other in a game.">
+        <img class="image-bottom" src="/assets/images/random.jpg" alt="Image of a stickman taking a quiz by himself.">
       </div>
     </div>
-
-    <div class="margin">
-      <div class="card" style="width: 20rem;">
-        <div class="card-body">
-          <h4 class="card-title">Make a Quiz!</h4>
-          <h5 class="card-subtitle">Say What?</h5>
-          {{#if loggedIn}}
-          <p class="card-text">Create a quiz to test your friends whether they know as much as you!</p>
-          <a href="/create-quiz"><button>Create Now!</button></a>
-          {{else}}
-          <p class="card-text">Login into your account and create your custom quiz!</p>
-          <button type="button" disabled>Create Now!</button>
-          {{/if}}
-        </div>
-        <img class="image-bottom" src="/assets/images/makeQuiz.jpg" alt="Image of a lightbulb lighting up.">
-      </div>
     </div>
-
-  </div>
-
-
 </body>

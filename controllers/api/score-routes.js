@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Question, Quiz, Score, User } = require('../../models');
+const { Question, Quiz, Score, User, Profile } = require('../../models');
 
 router.get('/', (req, res) => {
     Score.findAll().then(allUser =>
@@ -26,5 +26,35 @@ router.post('/create', (req, res) => {
         })
     }
 });
+
+router.get('/default-game', async (req, res) => {
+    try {
+        Score.findAll({
+            include: [User],
+            where: {
+                QuizId: null
+            }
+        }).then(userData => {
+            res.json(userData)
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
+
+router.get('/:id', (req, res) => {
+    Score.findAll({
+        include: [User, Quiz],
+        where: {
+            QuizId: req.params.id
+        },
+    }).then(data => {
+        res.json(data)
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({ err: err })
+    })
+})
 
 module.exports = router;

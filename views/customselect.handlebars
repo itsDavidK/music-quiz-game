@@ -48,37 +48,22 @@
           <tr>
             <th>#</th>
             <th>Name</th>
-            <th>Points</th>
+            <th>Play</th>
           </tr>
         </thead>
 
-        <tbody class="liststart" data-id="{{currentQuiz}}">
-          {{!-- <tr>
-            <td>1</td>
-            <td>YourMom</td>
-            <td>420</td>
-          </tr> --}}
+        <tbody class="liststart">
+          {{#each quizzes as |quiz|}}
+          <tr data-num="{{id}}">
+            <td>{{id}}</td>
+            <td>{{quiz_title}}</td>
+            <td>
+              <a href="/play-custom/{{id}}"><button class="btn-small btn-success-outline">Play</button></a>
+              <a href="/quiz-score/{{id}}"><button class="btn-small btn-secondary-outline">Score</button></a>
+            </td>
+          </tr>
+          {{/each}}
         </tbody>
-
       </table>
-
-      <script src="/js/confetti.js"></script>
-      <script>
-        const start = () => {
-          setTimeout(function(){
-            confetti.start();
-          }, 0);
-        };
-
-        const stop = () => {
-          setTimeout(function(){
-            confetti.stop();
-          }, 5000)
-        }
-        start();
-        stop();
-      </script>
-
   </div>
-  <script src="/js/scoreboard.js"></script>
 </body>
