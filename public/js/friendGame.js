@@ -1,4 +1,3 @@
-
 const socket = io();
 const usersDiv = document.getElementById('usersDiv')
 const opponentP = document.createElement('p')
@@ -44,6 +43,10 @@ function countDown() {
         // if the time left 0 stop the counter and display the message
         if (timer === 0) {
             clearInterval(timeInterval);
+
+            loadingPage.style.display = "flex"
+            document.querySelector(".gamefunction").classList.add("hidden");
+            document.querySelector(".gamedone").classList.add("hidden");
             comparedata()
         }
         //setting the speed of counter
@@ -65,7 +68,7 @@ function playerConnectedOrDisconnected(players) {
 socket.emit('sendName', myUser.textContent)
 socket.on('start-game-user', () => {
     document.querySelector(".gamefunction").classList.add("hidden");
-    document.querySelector(".gamedone").classList.add("hidden"); ``
+    document.querySelector(".gamedone").classList.add("hidden");
     goToGame()
 })
 
@@ -79,13 +82,15 @@ start.addEventListener('click', () => {
 })
 
 for (let i = 0; i < customs.length; i++) {
-    customs[i].addEventListener('click', () => {
+    customs[i].addEventListener('click', (event) => {
+
+
         role = 'host'
         socket.emit('start-game-host', role)
 
-        const dataEl = document.querySelector('#data-Id')
-        const databaseId = dataEl.getAttribute('data-id')
-        quizNum = databaseId
+        const dataEl = event.target.getAttribute('data-id')
+
+        quizNum = dataEl
         gameType = 'custom'
         goToGame()
         init()
@@ -167,9 +172,7 @@ function checkingTwoItems() {
         if (role === 'host') {
             socket.emit('send-vids', musicArry)
         }
-        countDown();
-        loadingPage.style.display = "none"
-        document.querySelector(".gamefunction").classList.remove("hidden");
+
 
         const musicOne = musicArry[0];
         const musicTwo = musicArry[1];
@@ -196,6 +199,9 @@ function checkingTwoItems() {
         }
         document.querySelector('#higherOne').setAttribute("data-view", `${oneAnswer}`)
         document.querySelector('#higherTwo').setAttribute("data-view", `${twoAnswer}`)
+        countDown();
+        loadingPage.style.display = "none"
+        document.querySelector(".gamefunction").classList.remove("hidden");
     }
 }
 
@@ -234,6 +240,7 @@ function comparedata() {
     } else {
 
         if (role === 'host' || gameType === 'rand') {
+            console.log(role)
             storescore();
 
         }
@@ -243,10 +250,15 @@ function comparedata() {
 
 
 async function storescore() {
+    console.log('storescore')
+    loadingPage.style.display = 'none'
+    console.log('loading')
     document.querySelector(".gamefunction").classList.add("hidden");
+    console.log('gamefunhidden')
     document.querySelector(".gamedone").classList.remove("hidden");
     document.querySelector("#scoredisplay").innerHTML = (`score: ${score}`)
-    loadingPage.style.display = 'none'
+    console.log('score')
+
     const response = await fetch('/api/scores/create', {
         method: 'POST',
         body: JSON.stringify({
@@ -306,8 +318,8 @@ function init() {
 }
 
 socket.on('receive-vids', data => {
-    document.querySelector(".gamedone").classList.add("hidden");
-    document.querySelector(".gamefunction").classList.add("hidden");
+    // document.querySelector(".gamedone").classList.add("hidden");
+    // document.querySelector(".gamefunction").classList.add("hidden");
     document.querySelector("#score").textContent = `score: ${score}`;
     musicArry = data;
     checkingTwoItems()
@@ -318,5 +330,3 @@ socket.on('receive-vids', data => {
 for (let i = 0; i < answerButton.length; i++) {
     answerButton[i].addEventListener('click', clickevent)
 }
-
-
