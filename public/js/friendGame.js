@@ -1,4 +1,3 @@
-
 const socket = io();
 const usersDiv = document.getElementById('usersDiv')
 const opponentP = document.createElement('p')
@@ -45,6 +44,9 @@ function countDown() {
         if (timer === 0) {
             clearInterval(timeInterval);
             comparedata()
+            loadingPage.style.display = "flex"
+            document.querySelector(".gamefunction").classList.add("hidden");
+            document.querySelector(".gamedone").classList.add("hidden");
         }
         //setting the speed of counter
     }, 1000);
@@ -65,7 +67,7 @@ function playerConnectedOrDisconnected(players) {
 socket.emit('sendName', myUser.textContent)
 socket.on('start-game-user', () => {
     document.querySelector(".gamefunction").classList.add("hidden");
-    document.querySelector(".gamedone").classList.add("hidden"); ``
+    document.querySelector(".gamedone").classList.add("hidden");
     goToGame()
 })
 
@@ -167,9 +169,7 @@ function checkingTwoItems() {
         if (role === 'host') {
             socket.emit('send-vids', musicArry)
         }
-        countDown();
-        loadingPage.style.display = "none"
-        document.querySelector(".gamefunction").classList.remove("hidden");
+
 
         const musicOne = musicArry[0];
         const musicTwo = musicArry[1];
@@ -196,6 +196,9 @@ function checkingTwoItems() {
         }
         document.querySelector('#higherOne').setAttribute("data-view", `${oneAnswer}`)
         document.querySelector('#higherTwo').setAttribute("data-view", `${twoAnswer}`)
+        countDown();
+        loadingPage.style.display = "none"
+        document.querySelector(".gamefunction").classList.remove("hidden");
     }
 }
 
@@ -306,8 +309,8 @@ function init() {
 }
 
 socket.on('receive-vids', data => {
-    document.querySelector(".gamedone").classList.add("hidden");
-    document.querySelector(".gamefunction").classList.add("hidden");
+    // document.querySelector(".gamedone").classList.add("hidden");
+    // document.querySelector(".gamefunction").classList.add("hidden");
     document.querySelector("#score").textContent = `score: ${score}`;
     musicArry = data;
     checkingTwoItems()
@@ -318,5 +321,3 @@ socket.on('receive-vids', data => {
 for (let i = 0; i < answerButton.length; i++) {
     answerButton[i].addEventListener('click', clickevent)
 }
-
-
