@@ -341,6 +341,7 @@ for (let i = 0; i < answerButton.length; i++) {
 
 
 socket.on('storescore', () => {
+    timer = 0;
     console.log('work')
     loadingPage.style.display = "none"
     document.querySelector(".gamedone").classList.remove("hidden");
