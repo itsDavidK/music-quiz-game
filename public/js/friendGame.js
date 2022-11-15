@@ -237,7 +237,6 @@ function comparedata() {
             storescore();
 
         }
-
     }
 }
 
