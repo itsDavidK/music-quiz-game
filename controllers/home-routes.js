@@ -129,6 +129,9 @@ router.get('/userpage', async (req, res) => {
 
 router.get('/lobby', async (req, res) => {
     try {
+        if (!req.session.loggedIn) {
+            return res.redirect("/users/login")
+        }
         User.findOne({
             include: [Profile, Quiz],
             where: {
