@@ -51,6 +51,9 @@ io.on('connection', function (socket) {
     socket.broadcast.emit('receive-vids', data)
   })
 
+  socket.on('store-score', () => {
+    socket.broadcast.emit('storescore')
+  })
 
   //Whenever someone disconnects this piece of code executed
   socket.on('disconnect', function () {
