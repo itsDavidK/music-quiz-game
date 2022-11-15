@@ -224,13 +224,14 @@ function comparedata() {
     questionNum++;
     if (gameType == 'rand' && questionNum < 10) {
         loadingPage.style.display = "flex"
+        console.log('random game')
         document.querySelector(".gamefunction").classList.add("hidden");
         if (role === "host") {
 
             init();
         }
     }
-    if (gameType == 'custom' && qArry.length != 0) {
+    else if (gameType == 'custom' && qArry.length != 0) {
         loadingPage.style.display = "flex"
         document.querySelector(".gamefunction").classList.add("hidden");
         if (role === "host") {
@@ -250,14 +251,14 @@ function comparedata() {
 
 
 async function storescore() {
-    console.log('storescore')
+
     loadingPage.style.display = 'none'
-    console.log('loading')
+
     document.querySelector(".gamefunction").classList.add("hidden");
-    console.log('gamefunhidden')
+
     document.querySelector(".gamedone").classList.remove("hidden");
     document.querySelector("#scoredisplay").innerHTML = (`score: ${score}`)
-    console.log('score')
+
 
     const response = await fetch('/api/scores/create', {
         method: 'POST',
