@@ -42,6 +42,7 @@ function countDown() {
 
         // if the time left 0 stop the counter and display the message
         if (timer === 0) {
+            console.log('time end')
             clearInterval(timeInterval);
 
             loadingPage.style.display = "flex"
@@ -211,7 +212,7 @@ function clickevent(event) {
 }
 
 function comparedata() {
-
+    console.log(role)
     if (answerData == "true") {
         score++;
         resultEl.textContent = ("right");
@@ -223,7 +224,7 @@ function comparedata() {
     }
     questionNum++;
     if (gameType == 'rand' && questionNum < 10) {
-        loadingPage.style.display = "flex"
+        // loadingPage.style.display = "flex"
         console.log('random game')
         document.querySelector(".gamefunction").classList.add("hidden");
         if (role === "host") {
@@ -232,7 +233,8 @@ function comparedata() {
         }
     }
     else if (gameType == 'custom' && qArry.length != 0) {
-        loadingPage.style.display = "flex"
+        // loadingPage.style.display = "flex"
+        console.log('custom game')
         document.querySelector(".gamefunction").classList.add("hidden");
         if (role === "host") {
 
@@ -241,7 +243,7 @@ function comparedata() {
     } else {
 
         if (role === 'host' || gameType === 'rand') {
-            console.log(role)
+
             storescore();
 
         }
@@ -291,6 +293,10 @@ async function storescore() {
         }).catch(err => {
             return;
         })
+    if (role === 'host') {
+        socket.emit('store-score')
+
+    }
 }
 
 // inital start
@@ -321,6 +327,7 @@ function init() {
 socket.on('receive-vids', data => {
     // document.querySelector(".gamedone").classList.add("hidden");
     // document.querySelector(".gamefunction").classList.add("hidden");
+    gameType = 'custom'
     document.querySelector("#score").textContent = `score: ${score}`;
     musicArry = data;
     checkingTwoItems()
@@ -331,3 +338,11 @@ socket.on('receive-vids', data => {
 for (let i = 0; i < answerButton.length; i++) {
     answerButton[i].addEventListener('click', clickevent)
 }
+
+
+socket.on('storescore', () => {
+    console.log('work')
+    loadingPage.style.display = "none"
+    document.querySelector(".gamedone").classList.remove("hidden");
+    storescore()
+})
