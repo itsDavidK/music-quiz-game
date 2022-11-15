@@ -13,9 +13,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-
-
-
 router.get('/play-alone', async (req, res) => {
     try {
         res.render('quiz', {
@@ -27,6 +24,7 @@ router.get('/play-alone', async (req, res) => {
         res.status(500).json(err);
     }
 })
+
 router.get('/play-custom/:id', async (req, res) => {
     try {
         const currentQuiz = req.params.id;
@@ -42,8 +40,13 @@ router.get('/play-custom/:id', async (req, res) => {
 })
 
 router.get('/play-friends', async (req, res) => {
-
     try {
+        if (!req.session.loggedIn) {
+            return res.redirect("/users/login", {
+                loggedIn: req.session.loggedIn,
+                userInfo: req.session.userInfo
+            })
+        }
         res.render('quiz', {
             loggedIn: req.session.loggedIn,
             userInfo: req.session.userInfo
@@ -124,12 +127,8 @@ router.get('/userpage', async (req, res) => {
     }
 });
 
-
 router.get('/lobby', async (req, res) => {
-
-
     try {
-
         User.findOne({
             include: [Profile, Quiz],
             where: {
