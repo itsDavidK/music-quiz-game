@@ -68,6 +68,13 @@ uuid
 
 ## Usage
 
+npm i --> .env setting --> then you can start the server with node server.js or npm start. 
+
+We also have seeds for the database (npm run seed)
+
+In this website you can create your own account, quizzes and profile that save in the database. 
+
+All of this databases are interacting eachother and with this relationship we generated handlebar pages. 
 
 ## App Screenshot 
 <img src="./public/assets/images/2022-11-14 14-11-47.gif">
