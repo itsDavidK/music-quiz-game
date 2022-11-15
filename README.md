@@ -84,3 +84,11 @@ https://musicguava.herokuapp.com/
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
+
+## Contact 
+
+https://github.com/itsDavidK
+
+https://github.com/jordan-koichiro-johnson
+
+https://github.com/MiaYun98
