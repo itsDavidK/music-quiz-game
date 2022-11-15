@@ -43,10 +43,11 @@ function countDown() {
         // if the time left 0 stop the counter and display the message
         if (timer === 0) {
             clearInterval(timeInterval);
-            comparedata()
+
             loadingPage.style.display = "flex"
             document.querySelector(".gamefunction").classList.add("hidden");
             document.querySelector(".gamedone").classList.add("hidden");
+            comparedata()
         }
         //setting the speed of counter
     }, 1000);
@@ -81,13 +82,15 @@ start.addEventListener('click', () => {
 })
 
 for (let i = 0; i < customs.length; i++) {
-    customs[i].addEventListener('click', () => {
+    customs[i].addEventListener('click', (event) => {
+
+
         role = 'host'
         socket.emit('start-game-host', role)
 
-        const dataEl = document.querySelector('#data-Id')
-        const databaseId = dataEl.getAttribute('data-id')
-        quizNum = databaseId
+        const dataEl = event.target.getAttribute('data-id')
+
+        quizNum = dataEl
         gameType = 'custom'
         goToGame()
         init()
@@ -237,6 +240,7 @@ function comparedata() {
     } else {
 
         if (role === 'host' || gameType === 'rand') {
+            console.log(role)
             storescore();
 
         }
@@ -246,10 +250,15 @@ function comparedata() {
 
 
 async function storescore() {
+    console.log('storescore')
+    loadingPage.style.display = 'none'
+    console.log('loading')
     document.querySelector(".gamefunction").classList.add("hidden");
+    console.log('gamefunhidden')
     document.querySelector(".gamedone").classList.remove("hidden");
     document.querySelector("#scoredisplay").innerHTML = (`score: ${score}`)
-    loadingPage.style.display = 'none'
+    console.log('score')
+
     const response = await fetch('/api/scores/create', {
         method: 'POST',
         body: JSON.stringify({
